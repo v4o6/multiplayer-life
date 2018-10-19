@@ -156,6 +156,14 @@ public class FitMultiPlayer {
 
     // Result: [[a, a, a, a, b, b, b, b], [a, a, a, a, b, b, b, b], [a, a, a, a, b, b, b, b], [a, a, a, a, b, b, b, b], [c, c, c, c, d, d, d, d], [c, c, c, c, d, d, d, d], [c, c, c, c, d, d, d, d], [c, c, c, c, d, d, d, d]]
 
+    /**
+     * Combine To Array
+     * @param listOfArrays listOfArrays to consider
+     * @param verticalResolution verticalResolution to consider (vertical array(s) number)
+     * @param horizontalResolution horizontalResolution to consider (horizontal array(s) number)
+     * @param <T>
+     * @return
+     */
     public static <T> T[][] combineToArray(List<T[][]> listOfArrays, int verticalResolution, int horizontalResolution) {
         T[][] result = null;
         if (listOfArrays == null && listOfArrays.isEmpty() || listOfArrays.size() != horizontalResolution * verticalResolution) { return result; }
@@ -230,6 +238,8 @@ public class FitMultiPlayer {
      * @param args
      */
     public static void main(String[] args) {
+
+        combineToArray(list, 2, 2);
 
         int count_B = count(game, "b");
         int count_C = count(game, "c");
