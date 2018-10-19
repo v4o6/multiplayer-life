@@ -112,6 +112,12 @@ public class FitMultiPlayer {
     }
 
 
+    /**
+     * Playing stuff
+     * @param arrays
+     * @param <T>
+     * @return
+     */
     static <T> T[] joinArrayGeneric(T[]... arrays) {
         int length = 0;
         for (T[] array : arrays) {
@@ -125,6 +131,14 @@ public class FitMultiPlayer {
         }
         return result;
     }
+
+    /**
+     * Playing stuff
+     * @param items
+     * @param maxSubArraySize
+     * @param <T>
+     * @return
+     */
     public static <T> List<T[]> splitArray(T[] items, int maxSubArraySize) {
         List<T[]> result = new ArrayList<T[]>();
         if (items == null || items.length == 0) {
@@ -144,7 +158,11 @@ public class FitMultiPlayer {
     }
 
 
-    public static <K> void main(String[] args) {
+    /**
+     * Playing stuff
+     * @param args
+     */
+    public static void main(String[] args) {
 
         int count_B = count(game, "b");
         int count_C = count(game, "c");
