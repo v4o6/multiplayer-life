@@ -112,6 +112,12 @@ public class FitMultiPlayer {
     }
 
 
+    /**
+     * Playing stuff
+     * @param arrays
+     * @param <T>
+     * @return
+     */
     static <T> T[] joinArrayGeneric(T[]... arrays) {
         int length = 0;
         for (T[] array : arrays) {
@@ -144,6 +150,10 @@ public class FitMultiPlayer {
     }
 
 
+    /**
+     * Playing stuff
+     * @param args
+     */
     public static void main(String[] args) {
 
         int count_B = count(game, "b");
