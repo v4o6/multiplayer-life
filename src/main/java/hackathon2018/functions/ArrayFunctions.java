@@ -92,7 +92,7 @@ public class FitMultiPlayer {
 
 
     /**
-     * Count Countable
+     * Count
      * @param array
      * @param countable
      * @param <T>
