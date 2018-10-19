@@ -111,6 +111,73 @@ public class FitMultiPlayer {
         return count;
     }
 
+    //---------------------------------------------------------------------------------
+    public static Object[][] a = new Object[][]{
+            {"a", "a", "a", "a"},
+            {"a", "a", "a", "a"},
+            {"a", "a", "a", "a"},
+            {"a", "a", "a", "a"},
+    };
+
+    public static Object[][] b = new Object[][]{
+            {"b", "b", "b", "b"},
+            {"b", "b", "b", "b"},
+            {"b", "b", "b", "b"},
+            {"b", "b", "b", "b"},
+    };
+
+    public static Object[][] c = new Object[][]{
+            {"c", "c", "c", "c"},
+            {"c", "c", "c", "c"},
+            {"c", "c", "c", "c"},
+            {"c", "c", "c", "c"},
+    };
+
+    public static Object[][] d = new Object[][]{
+            {"d", "d", "d", "d"},
+            {"d", "d", "d", "d"},
+            {"d", "d", "d", "d"},
+            {"d", "d", "d", "d"},
+    };
+
+    public static List<Object[][]> list = new ArrayList<Object[][]>() {{
+        add(a);
+        add(b);
+        add(c);
+        add(d);
+    }};
+
+    static int[][] OFFSETS = new int[][]{
+            {0, 0},
+            {0, 4},
+            {4, 0},
+            {4, 4},
+    };
+
+    // Result: [[a, a, a, a, b, b, b, b], [a, a, a, a, b, b, b, b], [a, a, a, a, b, b, b, b], [a, a, a, a, b, b, b, b], [c, c, c, c, d, d, d, d], [c, c, c, c, d, d, d, d], [c, c, c, c, d, d, d, d], [c, c, c, c, d, d, d, d]]
+
+    public static <T> T[][] combineToArray(List<T[][]> listOfArrays, int verticalResolution, int horizontalResolution) {
+        T[][] result = null;
+        if (listOfArrays == null && listOfArrays.isEmpty() || listOfArrays.size() != horizontalResolution * verticalResolution) { return result; }
+        int commonLength = listOfArrays.get(0).length;
+        for (T[][] array2D : listOfArrays) {
+            if (array2D.length != commonLength) { return result; }
+            for (T[] array1D : array2D) {
+                if (array1D.length != commonLength) { return result; } }
+        }
+        result = (T[][]) new Object[verticalResolution * commonLength][horizontalResolution * commonLength];
+        for (int c = 0; c < listOfArrays.size(); c++) {
+            T[][] array = listOfArrays.get(c);
+            for (int row = 0; row < array.length; row++) {
+                for (int col = 0; col < array[row].length; col++) {
+                    result[row + OFFSETS[c][0]][col + OFFSETS[c][1]] = array[row][col];
+                }
+            }
+        }
+        System.out.println(Arrays.deepToString(result));
+        return result;
+    }
+
 
     /**
      * Playing stuff
