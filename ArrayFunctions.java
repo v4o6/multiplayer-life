@@ -131,6 +131,14 @@ public class FitMultiPlayer {
         }
         return result;
     }
+
+    /**
+     * Playing stuff
+     * @param items
+     * @param maxSubArraySize
+     * @param <T>
+     * @return
+     */
     public static <T> List<T[]> splitArray(T[] items, int maxSubArraySize) {
         List<T[]> result = new ArrayList<T[]>();
         if (items == null || items.length == 0) {
