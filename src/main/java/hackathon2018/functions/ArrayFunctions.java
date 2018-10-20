@@ -159,21 +159,21 @@ public class FitMultiPlayer {
     /**
      * Combine To Array
      * @param listOfArrays listOfArrays to consider
-     * @param verticalResolution verticalResolution to consider (vertical array(s) number)
-     * @param horizontalResolution horizontalResolution to consider (horizontal array(s) number)
+     * @param verticalArrayResolution verticalArrayResolution to consider (array(s) number)
+     * @param horizontalArrayResolution horizontalArrayResolution to consider (array(s) number)
      * @param <T>
      * @return
      */
-    public static <T> T[][] combineToArray(List<T[][]> listOfArrays, int verticalResolution, int horizontalResolution) {
+    public static <T> T[][] combineToArray(List<T[][]> listOfArrays, int verticalArrayResolution, int horizontalArrayResolution) {
         T[][] result = null;
-        if (listOfArrays == null && listOfArrays.isEmpty() || listOfArrays.size() != horizontalResolution * verticalResolution) { return result; }
+        if (listOfArrays == null && listOfArrays.isEmpty() || listOfArrays.size() != verticalArrayResolution * horizontalArrayResolution) { return result; }
         int commonLength = listOfArrays.get(0).length;
         for (T[][] array2D : listOfArrays) {
             if (array2D.length != commonLength) { return result; }
             for (T[] array1D : array2D) {
                 if (array1D.length != commonLength) { return result; } }
         }
-        result = (T[][]) new Object[verticalResolution * commonLength][horizontalResolution * commonLength];
+        result = (T[][]) new Object[verticalArrayResolution * commonLength][horizontalArrayResolution * commonLength];
         for (int c = 0; c < listOfArrays.size(); c++) {
             T[][] array = listOfArrays.get(c);
             for (int row = 0; row < array.length; row++) {
