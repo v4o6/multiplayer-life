@@ -1,10 +1,10 @@
-package com.ze.test.Fitsner;
+package hackathon2018.functions;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class FitMultiPlayer {
+public class ArrayFunctions {
 
 
     public static Object[][] arr = new Object[][]
