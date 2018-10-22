@@ -45,10 +45,16 @@
   }
 
   function changeCellColor(event) {
-    if (event.target.attributes.fill.value === DEAD){
-      event.target.attributes.fill.value = ALIVE;
-    } else if (event.target.attributes.fill.value === ALIVE){
+    switch (event.target.attributes.fill.value) {
+    case ALIVE:
       event.target.attributes.fill.value = DEAD;
+      break;
+    case DEAD:
+    default:
+      event.target.attributes.fill.value = ALIVE;
+      break;
+
+
     }
   }
 
