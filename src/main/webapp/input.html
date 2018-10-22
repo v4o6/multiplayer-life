@@ -1,57 +1,56 @@
-
 <html>
 <head>
-  <title>input</title>
+    <meta charset="UTF-8"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./two.min.js"></script>
+    <title>input</title>
 </head>
-<style>
-  #canvas {
-    border: 5px solid black;
-    background-size: 100%;
-  }
-</style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://raw.githubusercontent.com/jonobr1/two.js/master/build/two.min.js"></script>
-<script type="text/javascript" language="JavaScript">
+<body>
+<div id="canvas">
+</div>
 
-  const HEIGHT = 8;
-  const WIDTH = 8;
-  window.onload = function() {
-    window.c = document.getElementById('canvas');
-    window.ctx = c.getContext("2d");
-    window.ctx.strokeStyle = '#000000';
-    window.ctx.lineWidth = 4;
-
-    for (let i = 0; i < 800; i+=100){
-      window.ctx.moveTo(i, 0);
-      window.ctx.lineTo(i, 600);
-      window.ctx.stroke();
-    }
-
-    for (let i = 0; i < 800; i+=100){
-      window.ctx.moveTo(0, i);
-      window.ctx.lineTo(600, i);
-      window.ctx.stroke();
-    }
-
-  };
-
-  function draw() {
-    for (let i = 0; i < HEIGHT; i++) {
-      for (let j = 0; j < WIDTH; j++) {
-        window.fillStyle = "#FFFFFF";
-        window.ctx.fillRect(100*i, 100*j, 99, 99);
-        window.ctx.stroke();
-      }
-    }
-  }
-
-</script>>
-<body onload="draw()" bgcolor= "aqua">
-<center>
-  <canvas id = "canvas" width="800" height="800" >
-    bonus text here
-  </canvas>
-</center>
+<button onclick="submitConfiguration()">submit</button>
 </body>
+<script type="text/javascript" language="JavaScript">
+  const GRIDHEIGHT = 800;
+  const GRIDWIDTH = 800;
+  const ROWNUMBER = 8;
+  const COLUMNNUMBER = 8;
+  const CELLHEIGHT = 100;
+  const CELLWIDTH = 100;
+  const ALIVE = "#000000";
+  const DEAD = "#FFFFFF";
+  const CANVAS = document.getElementById("canvas");
+  const params = {
+    width: GRIDHEIGHT,
+    height: GRIDWIDTH
+  };
+  const TWO = new Two(params).appendTo(CANVAS);
+  TWO.bind("click", changeCellColor);
+  for (let j = 0; j < ROWNUMBER; j++) {
+    for (let i = 0; i < COLUMNNUMBER; i++) {
+      let rect = TWO.makeRectangle(CELLHEIGHT * i + 50, CELLWIDTH * j + 50, CELLHEIGHT, CELLWIDTH);
+      rect.fill = DEAD;
+      rect.stroke = '#000000';
+      rect.lineWidth = '5px';
+      TWO.update();
+      rect._renderer.elem.addEventListener("click",  changeCellColor, false);
+    }
+  }
+
+  function submitConfiguration() {
+    //TODO call backend services.
+    window.alert("hello world!");
+  }
+
+  function changeCellColor(event) {
+    if (event.target.attributes.fill.value === DEAD){
+      event.target.attributes.fill.value = ALIVE;
+    } else if (event.target.attributes.fill.value === ALIVE){
+      event.target.attributes.fill.value = DEAD;
+    }
+  }
+
+</script>
 </html>
