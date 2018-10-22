@@ -35,6 +35,7 @@ public class Input {
   @PostMapping("/input/submit")
   public boolean submit(@RequestParam("playerId") final long playerId, @RequestParam("data") final String json) {
     // TODO
+    int test = 1;
     return true;
   }
 

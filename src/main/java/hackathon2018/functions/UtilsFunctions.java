@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class ArrayFunctions {
+class ArrayFunctions {
 
 
     public static Object[][] playerA = new Object[][]{

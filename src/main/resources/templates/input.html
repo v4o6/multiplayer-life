@@ -3,15 +3,19 @@
     <meta charset="UTF-8"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="javaScript/two.min.js"></script>
-    <title>input</title>
+    <title>initial configuration</title>
 </head>
 
 <body>
+<!--TODO: call backend and populate these dynamically.-->
+<div id='player1' a> username1</div>
+<div id='player2'> username2</div>
+<div id='player3'> username3</div>
+<div id='player4'> username4</div>
 <div id="canvas"></div>
 <button onclick="buildConfigurationFromInput()">submit</button>
 </body>
 
-<script src="javaScript/input.js"></script>
 <script type="text/javascript" language="JavaScript">
   //TODO player ID may be manipulated?
   const PLAYER_ID = 1;
@@ -61,18 +65,18 @@
       }
 
     });
-    let JSON2dBoolArray = JSON.stringify(gridBoolList);
-    //TODO: call api and submit the bool array.
-    submitConfigurations(JSON2dBoolArray);
+    submitConfigurations(gridBoolList);
   }
 
-  function submitConfigurations(JSONString) {
+  function submitConfigurations(gridBoolList) {
     let httpRequest = $.ajax({
-      type:'POST',
+      type: 'POST',
       url: '/input/submit',
-      user: PLAYER_ID,
-      contentType: 'JSON',
-      data: JSONString,
+      contentType: 'JSON/text',
+      data: JSON.stringify({
+        playerId: PLAYER_ID,
+        data: gridBoolList
+      }),
       complete: handleStateChange
     });
   }
