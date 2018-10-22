@@ -1,5 +1,6 @@
 package hackathon2018.multiplayerlife.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,17 @@ public class Input {
   @GetMapping("/input/player")
   @ModelAttribute("player")
   public Player getPlayer(@RequestParam("playerId") final long playerId) {
-    // TODO
-    return null;
+    return gameService.getPlayer(playerId);
   }
 
   @GetMapping("/input/statuses")
   @ModelAttribute("playerStatuses")
   public List<PlayerStatus> getPlayerStatuses(@RequestParam("gameId") final long gameId) {
-    // TODO
-    return null;
+    List<PlayerStatus> statusList = new ArrayList<PlayerStatus>();
+    for (Player player : gameService.getGame(gameId).getPlayers()) {
+      statusList.add(new PlayerStatus(player));
+    }
+    return statusList;
   }
 
   @PostMapping("/input/submit")
