@@ -18,8 +18,7 @@ public class GameService {
 
   public Player registerPlayer(final String name) {
     // ... create player (no history/re-use; users create a new player for each game)
-    Player newPlayer = new Player();
-    newPlayer.setName(name);
+    Player newPlayer = new Player(name);
     // ... associate player with a game
     Game game;
     if (games.isEmpty()) {
