@@ -9,7 +9,7 @@
 <body>
 <div id="canvas">
 </div>
-<button onclick="submitConfiguration()">submit</button>
+<button onclick="buildConfigurationFromInput()">submit</button>
 </body>
 <script type="text/javascript" language="JavaScript">
   const GRIDHEIGHT = 800;
@@ -26,7 +26,6 @@
     height: GRIDWIDTH
   };
   const TWO = new Two(params).appendTo(CANVAS);
-  TWO.bind("click", changeCellColor);
   for (let j = 0; j < ROWNUMBER; j++) {
     for (let i = 0; i < COLUMNNUMBER; i++) {
       let rect = TWO.makeRectangle(CELLHEIGHT * i + 50, CELLWIDTH * j + 50, CELLHEIGHT, CELLWIDTH);
@@ -34,14 +33,14 @@
       rect.stroke = '#000000';
       rect.lineWidth = '5px';
       TWO.update();
-      rect._renderer.elem.addEventListener("click",  changeCellColor, false);
+      rect._renderer.elem.addEventListener("click", changeCellColor, false);
     }
   }
 
-  function submitConfiguration() {
+  function buildConfigurationFromInput() {
     let gridList = Array.prototype.slice.call($("#two_0")[0].childNodes);
     let gridBoolList = new Array(ROWNUMBER);
-    for (let i = 0; i<ROWNUMBER; i++){
+    for (let i = 0; i < ROWNUMBER; i++) {
       gridBoolList[i] = new Array(COLUMNNUMBER);
     }
     gridList.forEach((gridCell) => {
@@ -59,9 +58,27 @@
       }
 
     });
+    let JSON2dBoolArray = JSON.stringify(gridBoolList);
     //TODO: call api and submit the bool array.
-    //     window.alert(gridBoolList);
-    window.alert("configurations submitted!");
+    submitConfigurations(JSON2dBoolArray);
+  }
+
+  function submitConfigurations(JSONString) {
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.open('POST', '/input/submit');
+    httpRequest.setRequestHeader('Content-Type', 'application/json');
+    httpRequest.onreadystatechange = handleStateChange;
+    httpRequest.send(JSONString);
+  }
+  
+  function handleStateChange(httpRequest) {
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+      window.alert("configurations submitted!");
+    }
+    else
+    {
+      window.alert('there was a problem with the request');
+    }
   }
 
   function changeCellColor(event) {
@@ -73,8 +90,6 @@
     default:
       event.target.attributes.fill.value = ALIVE;
       break;
-
-
     }
   }
 
