@@ -19,7 +19,37 @@ public class GameTest {
 
 
   @Test
-  public void buildStateTest() {
+  public void buildStateTest1() {
+    final Game game = new Game();
+
+    assert game.addPlayer(player1);
+    assert game.addPlayer(player2);
+    assert game.addPlayer(player3);
+    assert game.addPlayer(player4);
+
+    player1.setState(new LifeState(new boolean[][] {
+        {true}
+    }));
+    player2.setState(new LifeState(new boolean[][] {
+        {false}
+    }));
+    player3.setState(new LifeState(new boolean[][] {
+        {false}
+    }));
+    player4.setState(new LifeState(new boolean[][] {
+        {true}
+    }));
+
+    game.buildState();
+
+    assert Arrays.deepEquals(game.getState().getData(), new boolean[][]{
+        {true, false},
+        {false, true}
+    });
+  }
+
+  @Test
+  public void buildStateTest2() {
     final Game game = new Game();
 
     assert game.addPlayer(player1);
