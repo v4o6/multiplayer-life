@@ -3,18 +3,22 @@
 <head>
     <title>Hackathon 2018: Multiplayer Life</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.css}" />
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/mpl.css}" />
+    <!--<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.css}" />-->
 </head>
 
 <body>
 
-<h2>Welcome to Life!</h2>
+<h2>Welcome to Life! (in Multiplayer)</h2>
 
-<form action="input.html" th:action="@{/input}">
+<form action="input.html" th:action="@{/join}" th:object="${Player.FormInput}" method="post">
   <fieldset>
-    <input type="text" name="Name" th:name="#{index.input.name}"/>
-    <input type="submit" value="Join!" th:value="#{index.input.submit}"/>
+      <div>
+          <label th:text="#{index.name}">
+              Name:
+              <input type="text" th:field="*{name}"/>
+          </label>
+          <button type="submit" name="join" th:text="#{index.submit}">Join!</button>
+      </div>
   </fieldset>
 </form>
 

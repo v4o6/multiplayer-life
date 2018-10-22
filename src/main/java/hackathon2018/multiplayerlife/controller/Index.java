@@ -1,17 +1,34 @@
 package hackathon2018.multiplayerlife.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import hackathon2018.multiplayerlife.entities.Player;
 import hackathon2018.multiplayerlife.service.GameService;
 
-@RestController
+@Controller
+@RequestMapping("/")
 public class Index {
 
   @Autowired
   private GameService gameService;
 
-
-
+  @PostMapping
+ 	public ModelAndView join(@Valid Player.FormInput player, BindingResult result,
+                           RedirectAttributes redirect) {
+ 		if (result.hasErrors()) {
+ 			return new ModelAndView("messages/form", "formErrors", result.getAllErrors());
+ 		}
+ 		redirect.addFlashAttribute("globalMessage", "Joining a Game...");
+// 		return new ModelAndView("redirect:/input/{player.id}", "player.id", player.getId());
+    return null;
+ 	}
 
 }
