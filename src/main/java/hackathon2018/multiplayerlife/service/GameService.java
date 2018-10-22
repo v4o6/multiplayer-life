@@ -13,7 +13,7 @@ import hackathon2018.multiplayerlife.entities.Player;
 @Service
 public class GameService {
 
-  private static TreeMap<Long, Game> games =
+  private TreeMap<Long, Game> games =
       new TreeMap<Long, Game>(Comparator.reverseOrder());
 
   public Player registerPlayer(final String name) {
