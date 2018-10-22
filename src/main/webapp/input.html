@@ -9,7 +9,6 @@
 <body>
 <div id="canvas">
 </div>
-
 <button onclick="submitConfiguration()">submit</button>
 </body>
 <script type="text/javascript" language="JavaScript">
@@ -41,7 +40,25 @@
 
   function submitConfiguration() {
     //TODO call backend services.
-    window.alert("hello world!");
+    let gridList = $("#two_0")[0].childNodes;
+    let gridBoolList = [];
+    gridList.forEach((gridCell) => {
+      switch (gridCell.attributes.fill.value) {
+      case ALIVE:
+       gridBoolList.push(true);
+        break;
+      case DEAD:
+        gridBoolList.push(false);
+        break;
+      default:
+        window.alert("something messed up in the grid. please try again");
+        return;
+
+      }
+    });
+//TODO: call api and submit the bool array.
+    window.alert(gridBoolList.toString());
+    window.alert("configurations submitted!");
   }
 
   function changeCellColor(event) {
