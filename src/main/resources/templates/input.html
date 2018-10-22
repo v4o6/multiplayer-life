@@ -11,6 +11,7 @@
 <button onclick="buildConfigurationFromInput()">submit</button>
 </body>
 
+<script src="javaScript/input.js"></script>
 <script type="text/javascript" language="JavaScript">
   //TODO player ID may be manipulated?
   const PLAYER_ID = 1;
@@ -67,20 +68,15 @@
 
   function submitConfigurations(JSONString) {
     let httpRequest = $.ajax({
+      type:'POST',
       url: '/input/submit',
-      playerId: PLAYER_ID,
+      user: PLAYER_ID,
       contentType: 'JSON',
       data: JSONString,
       complete: handleStateChange
     });
   }
-  //       new XMLHttpRequest();
-  //   httpRequest.open('POST', '/input/submit');
-  //   httpRequest.setRequestHeader('Content-Type', 'application/json');
-  //   httpRequest.onreadystatechange = handleStateChange;
-  //   httpRequest.send("playerId=" + PLAYER_ID + "&data=" + encodeURIComponent(JSONString));
-  // }
-  //
+
   function handleStateChange(xhr, status) {
     if (status === XMLHttpRequest.DONE) {
       window.alert("configurations submitted!");
