@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +17,6 @@ public class Input {
 
   @Autowired
   private GameService gameService;
-
 
   @GetMapping("/input/player")
   @ModelAttribute("player")
@@ -30,6 +30,12 @@ public class Input {
   public List<PlayerStatus> getPlayerStatuses(@RequestParam("gameId") final long gameId) {
     // TODO
     return null;
+  }
+
+  @PostMapping("/input/submit")
+  public boolean submit(@RequestParam("playerId") final long playerId, @RequestParam("data") final String json) {
+    // TODO
+    return true;
   }
 
   public static class PlayerStatus {
