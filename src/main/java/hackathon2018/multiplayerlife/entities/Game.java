@@ -20,8 +20,13 @@ public class Game {
 
   public boolean addPlayer(final Player player) {
     synchronized (mutex) {
-      // TODO
-      return true;  // return true if player was successfully added (enough space in game)
+      for (int i = 0; i < players.length; i++) {
+        if (players[i] == null) {
+          players[i] = player;
+          return true;  // return true if player was successfully added (enough space in game)
+        }
+      }
+      return false;
     }
   }
 
