@@ -1,10 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javaScript/two.min.js"></script>
+    <title>input</title>
 </head>
-<body>
 
+<body>
+<div id="canvas">
+</div>
+<button onclick="submitConfiguration()">submit</button>
 </body>
+<script type="text/javascript" language="JavaScript">
+  const GRIDHEIGHT = 800;
+  const GRIDWIDTH = 800;
+  const ROWNUMBER = 8;
+  const COLUMNNUMBER = 8;
+  const CELLHEIGHT = 100;
+  const CELLWIDTH = 100;
+  const ALIVE = "#000000";
+  const DEAD = "#FFFFFF";
+  const CANVAS = document.getElementById("canvas");
+  const params = {
+    width: GRIDHEIGHT,
+    height: GRIDWIDTH
+  };
+  const TWO = new Two(params).appendTo(CANVAS);
+  TWO.bind("click", changeCellColor);
+  for (let j = 0; j < ROWNUMBER; j++) {
+    for (let i = 0; i < COLUMNNUMBER; i++) {
+      let rect = TWO.makeRectangle(CELLHEIGHT * i + 50, CELLWIDTH * j + 50, CELLHEIGHT, CELLWIDTH);
+      rect.fill = DEAD;
+      rect.stroke = '#000000';
+      rect.lineWidth = '5px';
+      TWO.update();
+      rect._renderer.elem.addEventListener("click",  changeCellColor, false);
+    }
+  }
+
+  function submitConfiguration() {
+    let gridList = Array.prototype.slice.call($("#two_0")[0].childNodes);
+    let gridBoolList = new Array(ROWNUMBER);
+    for (let i = 0; i<ROWNUMBER; i++){
+      gridBoolList[i] = new Array(COLUMNNUMBER);
+    }
+    gridList.forEach((gridCell) => {
+      let index = gridList.indexOf(gridCell);
+      switch (gridCell.attributes.fill.value) {
+      case ALIVE:
+        gridBoolList[Math.floor(index / COLUMNNUMBER)][index % ROWNUMBER] = true;
+        break;
+      case DEAD:
+        gridBoolList[Math.floor(index / COLUMNNUMBER)][index % ROWNUMBER] = false;
+        break;
+      default:
+        window.alert("something messed up in the grid. please try again");
+        return;
+      }
+
+    });
+    //TODO: call api and submit the bool array.
+    //     window.alert(gridBoolList);
+    window.alert("configurations submitted!");
+  }
+
+  function changeCellColor(event) {
+    switch (event.target.attributes.fill.value) {
+    case ALIVE:
+      event.target.attributes.fill.value = DEAD;
+      break;
+    case DEAD:
+    default:
+      event.target.attributes.fill.value = ALIVE;
+      break;
+
+
+    }
+  }
+
+</script>
 </html>
