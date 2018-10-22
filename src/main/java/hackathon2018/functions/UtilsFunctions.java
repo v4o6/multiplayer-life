@@ -74,12 +74,13 @@ public class ArrayFunctions {
     };
 
     static int[][] OFFSETS = new int[][]{
-//            {0, 0}, {0, 4}, {4, 0}, {4, 4},
             {0, 0},
             {0, 8},
             {8, 0},
             {8, 8},
     };
+
+
 
     static int vArrays = 2;
     static int hArrays = 2;
