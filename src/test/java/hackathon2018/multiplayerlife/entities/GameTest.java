@@ -6,16 +6,10 @@ import org.junit.Test;
 
 public class GameTest {
 
-  private static final Player player1 = new Player();
-  private static final Player player2 = new Player();
-  private static final Player player3 = new Player();
-  private static final Player player4 = new Player();
-  static {
-    player1.setName("one");
-    player2.setName("two");
-    player3.setName("three");
-    player4.setName("four");
-  }
+  private static final Player player1 = new Player("one");
+  private static final Player player2 = new Player("two");
+  private static final Player player3 = new Player("three");
+  private static final Player player4 = new Player("four");
 
 
   @Test
@@ -42,6 +36,7 @@ public class GameTest {
 
     game.buildState();
 
+    assert game.getState().getSize() == player1.getState().getSize() * 2;
     assert Arrays.deepEquals(game.getState().getData(), new boolean[][]{
         {true, false},
         {false, true}
@@ -76,6 +71,7 @@ public class GameTest {
 
     game.buildState();
 
+    assert game.getState().getSize() == player1.getState().getSize() * 2;
     assert Arrays.deepEquals(game.getState().getData(), new boolean[][]{
         {true, false, false, true},
         {false, true, true, false},
