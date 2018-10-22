@@ -8,7 +8,7 @@
 
 <body>
 <!--TODO: call backend and populate these dynamically.-->
-<div id='player1' a> username1</div>
+<div id='player1'> username1</div>
 <div id='player2'> username2</div>
 <div id='player3'> username3</div>
 <div id='player4'> username4</div>
@@ -19,6 +19,7 @@
 <script type="text/javascript" language="JavaScript">
   //TODO player ID may be manipulated?
   const PLAYER_ID = 1;
+
   const GRIDHEIGHT = 800;
   const GRIDWIDTH = 800;
   const ROWNUMBER = 8;
@@ -29,8 +30,8 @@
   const DEAD = "#FFFFFF";
   const CANVAS = document.getElementById("canvas");
   const params = {
-    width: GRIDHEIGHT,
-    height: GRIDWIDTH
+    width: GRIDWIDTH,
+    height: GRIDHEIGHT
   };
   const TWO = new Two(params).appendTo(CANVAS);
   for (let j = 0; j < ROWNUMBER; j++) {
