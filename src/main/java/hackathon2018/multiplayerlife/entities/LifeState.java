@@ -2,23 +2,18 @@ package hackathon2018.multiplayerlife.entities;
 
 public class LifeState {
 
-  private int size;
-  private boolean[][] data;
+  private final boolean[][] data;
 
-  public int getSize() {
-    return size;
+  public LifeState(final boolean[][] data) {
+    this.data = data;
   }
 
-  public void setSize(final int size) {
-    this.size = size;
+  public int getSize() {
+    return data.length;
   }
 
   public boolean[][] getData() {
     return data;
-  }
-
-  public void setData(final boolean[][] data) {
-    this.data = data;
   }
 
 }
