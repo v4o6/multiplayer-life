@@ -39,25 +39,28 @@
   }
 
   function submitConfiguration() {
-    //TODO call backend services.
-    let gridList = $("#two_0")[0].childNodes;
-    let gridBoolList = [];
+    let gridList = Array.prototype.slice.call($("#two_0")[0].childNodes);
+    let gridBoolList = new Array(ROWNUMBER);
+    for (let i = 0; i<ROWNUMBER; i++){
+      gridBoolList[i] = new Array(COLUMNNUMBER);
+    }
     gridList.forEach((gridCell) => {
+      let index = gridList.indexOf(gridCell);
       switch (gridCell.attributes.fill.value) {
       case ALIVE:
-       gridBoolList.push(true);
+        gridBoolList[Math.floor(index / COLUMNNUMBER)][index % ROWNUMBER] = true;
         break;
       case DEAD:
-        gridBoolList.push(false);
+        gridBoolList[Math.floor(index / COLUMNNUMBER)][index % ROWNUMBER] = false;
         break;
       default:
         window.alert("something messed up in the grid. please try again");
         return;
-
       }
+
     });
-//TODO: call api and submit the bool array.
-    window.alert(gridBoolList.toString());
+    //TODO: call api and submit the bool array.
+    //     window.alert(gridBoolList);
     window.alert("configurations submitted!");
   }
 
