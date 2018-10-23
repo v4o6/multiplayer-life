@@ -71,14 +71,57 @@ public class UtilsFunctions {
             {"c", "c", "c", "c", "c", "c", "c", "c", "d", "d", "d", "d", "d", "d", "d", "d"},
     };
 
+    //----------------------------------------------------------------------------------------
+
+    public static boolean[][] playerABoolean = new boolean[][]{
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+    };
+    public static boolean[][] playerBBoolean = new boolean[][]{
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true},
+    };
+    public static boolean[][] playerCBoolean = new boolean[][]{
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+    };
+    public static boolean[][] playerDBoolean = new boolean[][]{
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+    };
+    public static List<boolean[][]> playersBoolean = new ArrayList<boolean[][]>() {{add(playerABoolean); add(playerBBoolean); add(playerCBoolean); add(playerDBoolean);}};
+
+
     static int[][] OFFSETS = new int[][]{
             {0, 0},
             {0, 8},
             {8, 0},
             {8, 8},
     };
-
-
 
     static int vArrays = 2;
     static int hArrays = 2;
@@ -105,6 +148,35 @@ public class UtilsFunctions {
         result = (T[][]) new Object[vArrays * commonLength][hArrays * commonLength];
         for (int c = 0; c < listOfArrays.size(); c++) {
             T[][] array = listOfArrays.get(c);
+            for (int row = 0; row < array.length; row++) {
+                for (int col = 0; col < array[row].length; col++) {
+                    result[row + OFFSETS[c][0]][col + OFFSETS[c][1]] = array[row][col];
+                }
+            }
+        }
+        System.out.println(Arrays.deepToString(result));
+        return result;
+    }
+
+    /**
+     * Combine To Array
+     * @param listOfArrays listOfArrays to consider
+     * @return returns 2D combined array
+     */
+    public static boolean[][] combineToArrayBoolean(List<boolean[][]> listOfArrays) {
+        boolean[][] result = null;
+        if (listOfArrays == null && listOfArrays.isEmpty() || listOfArrays.size() != vArrays * hArrays) { return result; }
+        int commonLength = listOfArrays.get(0).length;
+        // Check for common length consistency
+        for (boolean[][] array2D : listOfArrays) {
+            if (array2D.length != commonLength) { return result; }
+            for (boolean[] array1D : array2D) { if (array1D.length != commonLength) { return result; }
+            }
+        }
+        // Supply 2D output
+        result = new boolean[vArrays * commonLength][hArrays * commonLength];
+        for (int c = 0; c < listOfArrays.size(); c++) {
+            boolean[][] array = listOfArrays.get(c);
             for (int row = 0; row < array.length; row++) {
                 for (int col = 0; col < array[row].length; col++) {
                     result[row + OFFSETS[c][0]][col + OFFSETS[c][1]] = array[row][col];
@@ -159,7 +231,7 @@ public class UtilsFunctions {
     }
 
     public static <K> void main(String[] args) {
-        combineToArray(players);
+        combineToArrayBoolean(playersBoolean);
         splitToArrays(multiple);
     }
 
