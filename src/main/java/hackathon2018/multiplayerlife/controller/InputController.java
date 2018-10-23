@@ -43,7 +43,7 @@ public class InputController {
   public boolean submit(@RequestParam("playerId") final long playerId, @RequestParam("data") final boolean[][] data) {
     // TODO myron
 
-    final LifeState state = new LifeState(new boolean[0][0]);
+    final LifeState state = new LifeState(data);
     // TODO kenny
     return true;
   }

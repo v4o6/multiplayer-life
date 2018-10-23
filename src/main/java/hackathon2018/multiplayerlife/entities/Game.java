@@ -57,10 +57,9 @@ public class Game {
         return statusList;
     }
 
-    // call when all players are ready
-
     /**
      * Build State
+     * call when all players are ready
      */
     public void buildState() {
         synchronized (mutex) {

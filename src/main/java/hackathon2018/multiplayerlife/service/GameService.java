@@ -74,6 +74,9 @@ public class GameService {
   public void setPlayerState(final long playerId, final LifeState state) {
     Player player = getPlayer(playerId);
     player.setState(state);
+
+    // TODO kenny
+    // if all players are ready, call game.
   }
 
   private Game createNewGame() {

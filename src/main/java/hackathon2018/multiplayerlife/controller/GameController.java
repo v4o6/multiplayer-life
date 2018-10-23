@@ -30,7 +30,7 @@ public class GameController {
 
   @PostMapping("/game/submit")
   @ResponseBody
-  public boolean submit(@RequestParam("playerId") final long playerId, @RequestParam("data") final boolean[][] data) {
+  public boolean submit(@RequestParam("gameId") final long gameId, @RequestParam("data") final boolean[][] data) {
     // TODO myron
 
     final LifeState state = new LifeState(new boolean[0][0]);
