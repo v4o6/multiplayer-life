@@ -126,20 +126,15 @@ public class UtilsFunctions {
         add(playerDBoolean);
     }};
 
-
     static int[][] OFFSETS = new int[][]{
             {0, 0},
-            {0, 8},
-            {8, 0},
-            {8, 8},
+            {0, 1},
+            {1, 0},
+            {1, 1},
     };
 
     static int vArrays = 2;
     static int hArrays = 2;
-    static int arrayRows = 8;
-    static int arrayColumns = 8;
-    static int arrayResultRows = 16;
-    static int arrayResultColumns = 16;
 
     /**
      * Combine To Array
@@ -171,7 +166,7 @@ public class UtilsFunctions {
             T[][] array = listOfArrays.get(c);
             for (int row = 0; row < array.length; row++) {
                 for (int col = 0; col < array[row].length; col++) {
-                    result[row + OFFSETS[c][0]][col + OFFSETS[c][1]] = array[row][col];
+                    result[row + (OFFSETS[c][0] * commonLength)][col + (OFFSETS[c][1] * commonLength)] = array[row][col];
                 }
             }
         }
@@ -208,7 +203,7 @@ public class UtilsFunctions {
             boolean[][] array = listOfArrays.get(c);
             for (int row = 0; row < array.length; row++) {
                 for (int col = 0; col < array[row].length; col++) {
-                    result[row + OFFSETS[c][0]][col + OFFSETS[c][1]] = array[row][col];
+                    result[row + (OFFSETS[c][0] * commonLength)][col + (OFFSETS[c][1] * commonLength)] = array[row][col];
                 }
             }
         }
@@ -223,22 +218,26 @@ public class UtilsFunctions {
      * @param <T>
      * @return
      */
-    public static <T> List<T[][]> splitToArrays(T[][] baseArray) {
+    public static <T> List<T[][]> splitToArrays(T[][] baseArray, int rows, int cols) {
         List<T[][]> listOfArrays = new ArrayList<>();
         T[][] array;
         if ((baseArray == null) && (baseArray.length == 0)) {
             return listOfArrays;
         }
         for (int c = 0; c < OFFSETS.length; c++) {
-            array = (T[][]) new Object[arrayRows][arrayColumns];
+            array = (T[][]) new Object[rows][cols];
             for (int row = 0; row < array.length; row++) {
                 for (int col = 0; col < array[row].length; col++) {
-                    array[row][col] = baseArray[row + OFFSETS[c][0]][col + OFFSETS[c][1]];
+                    array[row][col] = baseArray[row + (OFFSETS[c][0] * rows)][col + (OFFSETS[c][1] * cols)];
                 }
             }
             listOfArrays.add(array);
         }
         return listOfArrays;
+    }
+
+    public static <T> List<T[][]> splitToArrays(T[][] baseArray) {
+        return splitToArrays(baseArray, 8, 8);
     }
 
     /**
@@ -345,8 +344,8 @@ public class UtilsFunctions {
 
 
     public static <K> void main(String[] args) {
-        convertIntToBoolArr(convertBoolToIntArr(combineToArrayBoolean(playersBoolean)));
-        convertBoolToIntArr(combineToArrayBoolean(playersBoolean));
+//        convertIntToBoolArr(convertBoolToIntArr(combineToArrayBoolean(playersBoolean)));
+//        convertBoolToIntArr(combineToArrayBoolean(playersBoolean));
         combineToArrayBoolean(playersBoolean);
         splitToArrays(multiple);
     }
