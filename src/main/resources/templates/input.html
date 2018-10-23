@@ -24,25 +24,25 @@
                 <tbody>
                 <tr id="player1" th:with="player1=${#lists.size(statuses) >= 1 ? statuses[0] : null}">
                     <td>
-                        <div id="player1-name" th:text="${player1} ? ${player.name} : _">Joining...</div>
+                        <div id="player1-name" th:text="${player1} ? ${player1.name} : _">Joining...</div>
                     </td>
                     <td><input type="checkbox" id="player1-ready" disabled th:checked="${player1}? *{ready} : _"/></td>
                 </tr>
                 <tr id="player2" th:with="player2=${#lists.size(statuses) >= 2 ? statuses[1] : null}">
                     <td>
-                        <div id="player2-name" th:text="${player2} ? ${player.name} : _">Joining...</div>
+                        <div id="player2-name" th:text="${player2} ? ${player2.name} : _">Joining...</div>
                     </td>
                     <td><input type="checkbox" id="player2-ready" disabled th:checked="${player2}? *{ready} : _"/></td>
                 </tr>
                 <tr id="player3" th:with="player3=${#lists.size(statuses) >= 3 ? statuses[2] : null}">
                     <td>
-                        <div id="player3-name" th:text="${player3} ? ${player.name} : _">Joining...</div>
+                        <div id="player3-name" th:text="${player3} ? ${player3.name} : _">Joining...</div>
                     </td>
                     <td><input type="checkbox" id="player3-ready" disabled th:checked="${player3}? *{ready} : _"/></td>
                 </tr>
                 <tr id="player4" th:with="player4=${#lists.size(statuses) >= 4 ? statuses[3] : null}">
                     <td>
-                        <div id="player4-name" th:text="${player4} ? ${player.name} : _">Joining...</div>
+                        <div id="player4-name" th:text="${player4} ? ${player4.name} : _">Joining...</div>
                     </td>
                     <td><input type="checkbox" id="player4-ready" disabled th:checked="${player4}? *{ready} : _"/></td>
                 </tr>
@@ -99,7 +99,7 @@
       $('#player4-name')[0]
     ];
 
-    $.get('/input/statuses/<gameId>', {
+    $.get('/input/statuses', {
       gameId: GAME_ID
     }).complete((data, textStatus, jqXHR) => {
       data.forEach((entry) => {
@@ -141,8 +141,8 @@
     let httpRequest = $.post('/input/submit', {
           playerId: PLAYER_ID,
           data: JSON.stringify(gridBoolList)
-        },
-        handleStateChange
+        }
+        // , handleStateChange
     );
   }
 
