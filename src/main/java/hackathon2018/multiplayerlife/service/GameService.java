@@ -1,9 +1,7 @@
 package hackathon2018.multiplayerlife.service;
 
 import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.TreeMap;
 
 import org.springframework.stereotype.Service;

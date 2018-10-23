@@ -23,9 +23,32 @@ public class GameController {
   public String game(@PathVariable final long gameId, final Model model) {
     model.addAttribute("gameId", gameId);
     final Game game = gameService.getGame(gameId);
-    model.addAttribute("lifeState", game.getState());
     model.addAttribute("statuses", game.getPlayerStatuses());
     return "game";
+  }
+
+  @GetMapping("/game/data")
+  @ResponseBody
+  public LifeState getInitialData(@RequestParam("gameId") final long gameId) {
+//    return gameService.getGame(gameId).getState();
+    return new LifeState(new boolean[][] {
+        {true, false, false, true, false, false, true, true, true, true, false, true, false, false, true, false},
+        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
+        {false, false, true, true, true, false, false, true, true, false, false, true, false, false, true, true},
+        {true, true, false, true, false, false, true, false, false, false, true, true, true, false, false, true},
+        {false, false, true, true, true, false, false, true, true, true, false, true, false, false, true, false},
+        {true, false, false, true, false, false, true, true, false, false, true, true, true, false, false, true},
+        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
+        {true, true, false, true, false, false, true, false, true, false, false, true, false, false, true, true},
+        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
+        {true, true, false, true, false, false, true, false, false, false, true, true, true, false, false, true},
+        {true, false, false, true, false, false, true, true, false, false, true, true, true, false, false, true},
+        {true, true, false, true, false, false, true, false, true, false, false, true, false, false, true, true},
+        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
+        {false, false, true, true, true, false, false, true, true, true, false, true, false, false, true, false},
+        {false, false, true, true, true, false, false, true, true, false, false, true, false, false, true, true},
+        {true, false, false, true, false, false, true, true, true, true, false, true, false, false, true, false}
+    });
   }
 
   @PostMapping("/game/submit")
