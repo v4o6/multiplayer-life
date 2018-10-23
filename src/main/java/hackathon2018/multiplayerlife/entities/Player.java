@@ -1,5 +1,7 @@
 package hackathon2018.multiplayerlife.entities;
 
+import hackathon2018.functions.UtilsFunctions;
+
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Player {
@@ -79,8 +81,7 @@ public class Player {
     }
 
     private static int countAlive(final LifeState state) {
-      // TODO dzmitry
-      return 0;
+      return UtilsFunctions.countBoolean(state.getData(), true);
     }
 
     public long getId() {
