@@ -103,8 +103,8 @@
       gameId: GAME_ID
     }).complete((data, textStatus, jqXHR) => {
       data.forEach((entry) => {
-        nameList[entry.id] = entry.name;
-        readyList[entry.id] = entry.ready;
+        nameList[entry.id].text = entry.name;
+        readyList[entry.id].checked = entry.ready;
       });
     });
     //redirect to the game page if all 4 players are checked.
