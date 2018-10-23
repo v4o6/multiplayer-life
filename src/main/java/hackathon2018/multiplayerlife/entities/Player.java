@@ -43,7 +43,7 @@ public class Player {
       ready = player.getState() != null;
     }
 
-    public static Status of(final Player player) {
+    static Status of(final Player player) {
       return new Status(player);
     }
 
@@ -57,6 +57,46 @@ public class Player {
 
     public boolean isReady() {
       return ready;
+    }
+  }
+
+
+  public static class Result {
+    private final long id;
+    private final String name;
+    private final LifeState finishState;
+    private final int count;
+
+    private Result(final long id, final String name, final LifeState finishState) {
+      this.id = id;
+      this.name = name;
+      this.finishState = finishState;
+      this.count = countAlive(finishState);
+    }
+
+    public static Result of(final Player player, final LifeState finishState) {
+      return new Result(player.getId(), player.getName(), finishState);
+    }
+
+    private static int countAlive(final LifeState state) {
+      // TODO dzmitry
+      return 0;
+    }
+
+    public long getId() {
+      return id;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public LifeState getFinishState() {
+      return finishState;
+    }
+
+    public int getCount() {
+      return count;
     }
   }
 

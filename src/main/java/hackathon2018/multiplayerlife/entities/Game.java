@@ -57,10 +57,9 @@ public class Game {
         return statusList;
     }
 
-    // call when all players are ready
-
     /**
      * Build State
+     * call when all players are ready
      */
     public void buildState() {
         synchronized (mutex) {
@@ -76,19 +75,7 @@ public class Game {
                 listOfArrays.add(playerData);
             }
             boolean[][] playersData = UtilsFunctions.combineToArrayBoolean(listOfArrays);
-            setState(new LifeState(playersData));
-        }
-    }
-
-    /**
-     * Set State
-     * @param state
-     * @return
-     */
-    public boolean setState(LifeState state) {
-        synchronized (mutex) {
-            this.state = state;
-            return true;
+          this.state = new LifeState(playersData);
         }
     }
 
@@ -96,6 +83,11 @@ public class Game {
         synchronized (mutex) {
             return state;
         }
+    }
+
+    public List<Player.Result> getPlayerResults(final LifeState state) {
+      // TODO dzmitry
+      return null;
     }
 
 }

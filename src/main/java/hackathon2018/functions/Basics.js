@@ -12,6 +12,9 @@ let cols;
 let rows;
 let resolution = 10;
 
+
+
+
 function setup() {
   createCanvas(600, 400);
   cols = width / resolution;
@@ -24,6 +27,10 @@ function setup() {
     }
   }
 }
+
+
+
+
 
 function draw() {
   background(0);
@@ -39,9 +46,7 @@ function draw() {
       }
     }
   }
-
   let next = make2DArray(cols, rows);
-
   // Compute next based on grid
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
@@ -49,7 +54,6 @@ function draw() {
       // Count live neighbors!
       let sum = 0;
       let neighbors = countNeighbors(grid, i, j);
-
       if (state == 0 && neighbors == 3) {
         next[i][j] = 1;
       } else if (state == 1 && (neighbors < 2 || neighbors > 3)) {
@@ -60,11 +64,7 @@ function draw() {
 
     }
   }
-
   grid = next;
-
-
-
 }
 
 
