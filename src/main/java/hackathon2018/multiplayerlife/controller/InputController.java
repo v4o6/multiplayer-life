@@ -23,17 +23,18 @@ public class InputController {
 
   @GetMapping("/input/{playerId}")
   public String input(@PathVariable final long playerId, final Model model) {
-    model.addAttribute("playerId", playerId);
+    final Player player = gameService.getPlayer(playerId);
+    model.addAttribute("player", player);
     final Game game = gameService.getGameByPlayer(playerId);
     model.addAttribute("gameId", game.getId());
-    model.addAttribute("statuses", GameService.getPlayerStatuses(game));
+    model.addAttribute("statuses", game.getPlayerStatuses());
     return "input";
   }
 
   @GetMapping("/input/statuses")
   @ResponseBody
   public List<Player.Status> refreshStatuses(@RequestParam("gameId") final long gameId) {
-    return GameService.getPlayerStatuses(gameService.getGame(gameId));
+    return gameService.getGame(gameId).getPlayerStatuses();
   }
 
   @PostMapping("/input/submit")

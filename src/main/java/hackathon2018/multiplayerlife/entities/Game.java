@@ -30,16 +30,29 @@ public class Game {
   }
 
   public List<Player> getPlayers() {
+    final ArrayList<Player> list = new ArrayList<>();
     synchronized (mutex) {
-      final ArrayList<Player> list = new ArrayList<>();
       for (final Player player : players) {
         if (player == null) {
           break;
         }
         list.add(player);
       }
-      return list;
     }
+    return list;
+  }
+
+  public List<Player.Status> getPlayerStatuses() {
+    final List<Player.Status> statusList = new ArrayList<>();
+    synchronized (mutex) {
+      for (final Player player : players) {
+        if (player == null) {
+          break;
+        }
+        statusList.add(Player.Status.of(player));
+      }
+    }
+    return statusList;
   }
 
   // call when all players are ready

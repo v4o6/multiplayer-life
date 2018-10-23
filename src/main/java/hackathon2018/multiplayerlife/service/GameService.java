@@ -83,12 +83,4 @@ public class GameService {
     return newGame;
   }
 
-  public static List<Player.Status> getPlayerStatuses(final Game game) {
-    final List<Player.Status> statusList = new ArrayList<>();
-    for (final Player player : game.getPlayers()) {
-      statusList.add(Player.Status.of(player));
-    }
-    return statusList;
-  }
-
 }

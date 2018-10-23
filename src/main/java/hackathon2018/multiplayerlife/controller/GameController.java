@@ -20,7 +20,7 @@ public class GameController {
     model.addAttribute("gameId", gameId);
     final Game game = gameService.getGame(gameId);
     model.addAttribute("lifeState", game.getState());
-    model.addAttribute("statuses", GameService.getPlayerStatuses(game));
+    model.addAttribute("statuses", game.getPlayerStatuses());
     return "game";
   }
 

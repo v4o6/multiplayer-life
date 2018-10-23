@@ -8,7 +8,7 @@ public class Player {
 
   private final long id;
   private final String name;
-  private LifeState state;
+  private volatile LifeState state;
 
   public Player(final String name) {
     this.id = idCounter.getAndIncrement();
