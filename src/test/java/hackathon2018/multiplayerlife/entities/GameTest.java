@@ -81,7 +81,8 @@ public class GameTest {
     });
   }
 
-  public void playerResultsTest() {
+  @Test
+  public void playerResultsTest1() {
     final Game game = new Game();
 
     assert game.addPlayer(player1);
@@ -131,7 +132,6 @@ public class GameTest {
         {false, true}
     });
     assert  result4.getCount() == 3;
-
   }
 
 }

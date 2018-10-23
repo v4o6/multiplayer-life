@@ -25,6 +25,7 @@ public class ResultTest {
     assert result2.getCount() == 2;
   }
 
+  @Test
   public void resultTest() {
     final Game game = new Game();
 

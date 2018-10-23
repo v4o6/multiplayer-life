@@ -15,7 +15,7 @@
         <td><div id="canvas"></div></td>
         <td>
             <table>
-                <thead><tr>Player</tr><tr>Ready</tr></thead>
+                <thead><td><h4>Player</h4></td><td><h4>Ready</h4></td></thead>
                 <tbody>
                 <tr id="player1" th:with="player1=${#lists.size(statuses) >= 1 ? statuses[0] : null}">
                     <td><div id="player1-name" th:text="${player1} ? ${player.name} : _">Joining...</div></td>
@@ -88,7 +88,7 @@
 
       //redirect to the game page if all 4 players are checked.
       if (player1.checked && player2.checked && player3.checked && player4.checked) {
-        window.location.href = "/game.html";
+        window.location.href = "/game/" + GAME_ID;
       }
     })
   }, 1000);
@@ -119,9 +119,11 @@
 
   function submitConfigurations(gridBoolList) {
     let httpRequest = $.post('/input/submit', {
-      playerId: PLAYER_ID,
-      data: gridBoolList
-    }).complete(handleStateChange);
+          playerId: PLAYER_ID,
+          data: JSON.stringify(gridBoolList)
+        },
+        handleStateChange
+    );
   }
 
   function handleStateChange(xhr, status) {

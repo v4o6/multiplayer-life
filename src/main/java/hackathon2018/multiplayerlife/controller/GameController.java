@@ -1,5 +1,9 @@
 package hackathon2018.multiplayerlife.controller;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,12 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import hackathon2018.multiplayerlife.entities.Game;
 import hackathon2018.multiplayerlife.entities.LifeState;
 import hackathon2018.multiplayerlife.service.GameService;
 
 @Controller
 public class GameController {
+  private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
   @Autowired
   private GameService gameService;
@@ -53,10 +60,18 @@ public class GameController {
 
   @PostMapping("/game/submit")
   @ResponseBody
-  public boolean submit(@RequestParam("gameId") final long gameId, @RequestParam("data") final boolean[][] data) {
-    // TODO myron
+  public boolean submit(@RequestParam("gameId") final long gameId, @RequestParam("data") final String json) {
+    final ObjectMapper mapper = new ObjectMapper();
+    final boolean[][] data;
+    try {
+      data = mapper.readValue(json, boolean[][].class);
+    }
+    catch (final IOException e) {
+      logger.error("invalid input", e);
+      return false;
+    }
 
-    final LifeState state = new LifeState(new boolean[0][0]);
+    final LifeState state = new LifeState(data);
     // TODO kenny
 
     return true;
