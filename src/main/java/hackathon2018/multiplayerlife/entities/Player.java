@@ -31,4 +31,33 @@ public class Player {
     this.state = state;
   }
 
+
+  public static class Status {
+    private final long id;
+    private final String name;
+    private final boolean ready;
+
+    private Status(final Player player) {
+      id = player.getId();
+      name = player.getName();
+      ready = player.getState() != null;
+    }
+
+    public static Status of(final Player player) {
+      return new Status(player);
+    }
+
+    public long getId() {
+      return id;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public boolean isReady() {
+      return ready;
+    }
+  }
+
 }

@@ -1,7 +1,9 @@
 package hackathon2018.multiplayerlife.service;
 
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.TreeMap;
 
 import org.springframework.stereotype.Service;
@@ -79,6 +81,14 @@ public class GameService {
     Long newGameId = newGame.getId();
     games.put(newGameId, newGame);
     return newGame;
+  }
+
+  public static List<Player.Status> getPlayerStatuses(final Game game) {
+    final List<Player.Status> statusList = new ArrayList<>();
+    for (final Player player : game.getPlayers()) {
+      statusList.add(Player.Status.of(player));
+    }
+    return statusList;
   }
 
 }

@@ -18,7 +18,7 @@ import hackathon2018.multiplayerlife.service.GameService;
 
 @Controller
 @RequestMapping("/")
-public class Index {
+public class IndexController {
 
   @Autowired
   private GameService gameService;
