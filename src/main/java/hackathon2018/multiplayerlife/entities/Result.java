@@ -1,10 +1,6 @@
-package hackathon2018.multiplayerlife.entities.command;
+package hackathon2018.multiplayerlife.entities;
 
 import java.util.List;
-
-import hackathon2018.multiplayerlife.entities.Game;
-import hackathon2018.multiplayerlife.entities.LifeState;
-import hackathon2018.multiplayerlife.entities.Player;
 
 public class Result {
 
