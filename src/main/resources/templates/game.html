@@ -2,9 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javaScript/two.min.js"></script>
+    <title>game in progress!</title>
 </head>
 <body>
-
+<div id = "canvas"></div>
 </body>
+
+<script type="text/javascript" language="JavaScript">
+  //TODO populate via calling backend API somehow.
+  const INITIAL_CONFIG = [
+    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
+    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
+    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
+    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
+    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
+    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
+    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
+    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
+    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
+    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
+    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
+    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
+    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
+    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
+    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
+    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
+  ];
+  const PLAYER_ID = 1;
+
+  const GRIDHEIGHT = 800;
+  const GRIDWIDTH = 800;
+  const ROWNUMBER = 16;
+  const COLUMNNUMBER = 16;
+  const CELLHEIGHT = 50;
+  const CELLWIDTH = 50;
+  const ALIVE = "#000000";
+  const DEAD = "#FFFFFF";
+  const CANVAS = document.getElementById("canvas");
+  const params = {
+    width: GRIDWIDTH,
+    height: GRIDHEIGHT
+  };
+  const TWO = new Two(params).appendTo(CANVAS);
+  for (let j = 0; j < ROWNUMBER; j++) {
+    for (let i = 0; i < COLUMNNUMBER; i++) {
+      let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT/2, CELLWIDTH * j + CELLWIDTH/2, CELLHEIGHT, CELLWIDTH);
+      rect.fill = INITIAL_CONFIG[i][j] ? ALIVE : DEAD;
+      rect.stroke = '#000000';
+      rect.lineWidth = '5px';
+      TWO.update();
+      rect._renderer.elem.addEventListener("click", changeCellColor, false);
+    }
+  }
+
+
+  function changeCellColor(event) {
+    switch (event.target.attributes.fill.value) {
+    case ALIVE:
+      event.target.attributes.fill.value = DEAD;
+      break;
+    case DEAD:
+    default:
+      event.target.attributes.fill.value = ALIVE;
+      break;
+    }
+  }
+
+</script>
+
 </html>

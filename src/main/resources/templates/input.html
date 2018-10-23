@@ -36,7 +36,7 @@
   const TWO = new Two(params).appendTo(CANVAS);
   for (let j = 0; j < ROWNUMBER; j++) {
     for (let i = 0; i < COLUMNNUMBER; i++) {
-      let rect = TWO.makeRectangle(CELLHEIGHT * i + 50, CELLWIDTH * j + 50, CELLHEIGHT, CELLWIDTH);
+      let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT/2, CELLWIDTH * j + CELLWIDTH/2, CELLHEIGHT, CELLWIDTH);
       rect.fill = DEAD;
       rect.stroke = '#000000';
       rect.lineWidth = '5px';
