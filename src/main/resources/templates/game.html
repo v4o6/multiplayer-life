@@ -340,17 +340,27 @@
     renderGrid(gameConfig);
     startGeneration++;
     if (startGeneration >= NUMBER_OF_GENERATIONS) {
+      //perform cleanup; submit results to server.
       clearInterval(intervalId);
-
       renderGrid(gameConfig);
       submitResults(gameConfig);
     }
   }, TIME_BETWEEN_EACH_TICK);
 
   function submitResults(gameConfig) {
-    //TODO: call backend.
-    window.alert(JSON.stringify(gameConfig));
+    let httpRequest = $.post("/game/submit", {
+      gameId: GAME_ID,
+      data: gameConfig
+    }).complete(handleStateChange);
+  }
 
+  function handleStateChange(xhr, status) {
+    if (status === XMLHttpRequest.DONE) {
+      window.alert("game over! submitted results.");
+    }
+    else {
+      window.alert('there was a problem with the request');
+    }
   }
 
   function updateGrid(booleanGrid) {
@@ -426,11 +436,6 @@
       event.target.attributes.fill.value = ALIVE;
       break;
     }
-  }
-
-  //given row and column number, returns the index of the 1d-array.
-  function getArrayIndexFromGridCoordinates(row, column) {
-    return ROWNUMBER * row + column;
   }
 
 </script>
