@@ -199,6 +199,26 @@ public class UtilsFunctions {
         return listOfArrays;
     }
 
+    /**
+     * Count Countable
+     *
+     * @param array
+     * @param countable
+     * @param <T>
+     * @param <K>
+     * @return returns number of countable
+     */
+    public static <T, K> int count(T[][] array, K countable) {
+        int count = 0;
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[row].length; col++) {
+                if (array[row][col] == countable) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 
     //-------------------------------------------------------------
 
@@ -257,30 +277,19 @@ public class UtilsFunctions {
         return splitToArraysBoolean(baseArray, 8, 8);
     }
 
-    /**
-     * Count Countable
-     *
-     * @param array
-     * @param countable
-     * @param <T>
-     * @param <K>
-     * @return returns number of countable
-     */
-    public static <T, K> int count(T[][] array, K countable) {
+    public static int countBoolean(boolean[][] array, boolean countable) {
         int count = 0;
-        for (int row = 0; row < array.length; row++) {
-            for (int col = 0; col < array[row].length; col++) {
-                if (array[row][col] == countable) {
-                    count++;
+        if ((array != null)) {
+            for (int row = 0; row < array.length; row++) {
+                for (int col = 0; col < array[row].length; col++) {
+                    if (array[row][col] == countable) {
+                        count++;
+                    }
                 }
             }
         }
         return count;
     }
-
-    //-------------------------------------------------------------
-    // Basics
-    //-------------------------------------------------------------
 
     public static int[][] convertBoolToIntArr(boolean[][] boolArr) {
         int[][] intArr = null;
@@ -362,6 +371,8 @@ public class UtilsFunctions {
 
     public static <K> void main(String[] args) {
 
+
+        countBoolean(playerABoolean, true);
         splitToArraysBoolean(combineToArrayBoolean(playersBoolean));
 
         //        convertIntToBoolArr(convertBoolToIntArr(combineToArrayBoolean(playersBoolean)));
