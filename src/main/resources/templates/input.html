@@ -12,25 +12,38 @@
 
 <table>
     <tr>
-        <td><div id="canvas"></div></td>
+        <td>
+            <div id="canvas"></div>
+        </td>
         <td>
             <table>
-                <thead><td><h4>Player</h4></td><td><h4>Ready</h4></td></thead>
+                <thead>
+                    <td><h4>Player</h4></td>
+                    <td><h4>Ready</h4></td>
+                </thead>
                 <tbody>
                 <tr id="player1" th:with="player1=${#lists.size(statuses) >= 1 ? statuses[0] : null}">
-                    <td><div id="player1-name" th:text="${player1} ? ${player.name} : _">Joining...</div></td>
+                    <td>
+                        <div id="player1-name" th:text="${player1} ? ${player.name} : _">Joining...</div>
+                    </td>
                     <td><input type="checkbox" id="player1-ready" disabled th:checked="${player1}? *{ready} : _"/></td>
                 </tr>
                 <tr id="player2" th:with="player2=${#lists.size(statuses) >= 2 ? statuses[1] : null}">
-                    <td><div id="player2-name" th:text="${player2} ? ${player.name} : _">Joining...</div></td>
+                    <td>
+                        <div id="player2-name" th:text="${player2} ? ${player.name} : _">Joining...</div>
+                    </td>
                     <td><input type="checkbox" id="player2-ready" disabled th:checked="${player2}? *{ready} : _"/></td>
                 </tr>
                 <tr id="player3" th:with="player3=${#lists.size(statuses) >= 3 ? statuses[2] : null}">
-                    <td><div id="player3-name" th:text="${player3} ? ${player.name} : _">Joining...</div></td>
+                    <td>
+                        <div id="player3-name" th:text="${player3} ? ${player.name} : _">Joining...</div>
+                    </td>
                     <td><input type="checkbox" id="player3-ready" disabled th:checked="${player3}? *{ready} : _"/></td>
                 </tr>
                 <tr id="player4" th:with="player4=${#lists.size(statuses) >= 4 ? statuses[3] : null}">
-                    <td><div id="player4-name" th:text="${player4} ? ${player.name} : _">Joining...</div></td>
+                    <td>
+                        <div id="player4-name" th:text="${player4} ? ${player.name} : _">Joining...</div>
+                    </td>
                     <td><input type="checkbox" id="player4-ready" disabled th:checked="${player4}? *{ready} : _"/></td>
                 </tr>
                 </tbody>
@@ -62,7 +75,8 @@
   const TWO = new Two(params).appendTo(CANVAS);
   for (let j = 0; j < ROWNUMBER; j++) {
     for (let i = 0; i < COLUMNNUMBER; i++) {
-      let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT/2, CELLWIDTH * j + CELLWIDTH/2, CELLHEIGHT, CELLWIDTH);
+      let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT / 2, CELLWIDTH * j + CELLWIDTH / 2, CELLHEIGHT,
+          CELLWIDTH);
       rect.fill = DEAD;
       rect.stroke = '#000000';
       rect.lineWidth = '5px';
@@ -72,25 +86,31 @@
   }
 
   //run a status poller
-  setInterval(()=> {
+  setInterval(() => {
+    let readyList = [
+      $('#player1-ready')[0],
+      $('#player2-ready')[0],
+      $('#player3-ready')[0],
+      $("#player4-ready")[0]
+    ], nameList = [
+      $('#player1-name')[0],
+      $('#player2-name')[0],
+      $('#player3-name')[0],
+      $('#player4-name')[0]
+    ];
 
-    let player1 = $('#player1-ready')[0],
-        player2 = $('#player2-ready')[0],
-        player3 = $('#player3-ready')[0],
-        player4 = $("#player4-ready")[0];
     $.get('/input/statuses/<gameId>', {
       gameId: GAME_ID
     }).complete((data, textStatus, jqXHR) => {
-      player1.checked = data[0].ready;
-      player2.checked = data[1].ready;
-      player3.checked = data[2].ready;
-      player4.checked = data[3].ready;
-
-      //redirect to the game page if all 4 players are checked.
-      if (player1.checked && player2.checked && player3.checked && player4.checked) {
-        window.location.href = "/game/" + GAME_ID;
-      }
-    })
+      data.forEach((entry) => {
+        nameList[entry.id] = entry.name;
+        readyList[entry.id] = entry.ready;
+      });
+    });
+    //redirect to the game page if all 4 players are checked.
+    if (readyList[0].checked && readyList[1].checked && readyList[2].checked && readyList[3].checked) {
+      window.location.href = "/game/" + GAME_ID;
+    }
   }, 1000);
 
   function buildConfigurationFromInput() {
