@@ -254,9 +254,11 @@ public class UtilsFunctions {
     }
 
 
-    public static List<boolean[][]> splitToArraysBoolean(boolean[][] baseArray, int rows, int cols) {
+    public static List<boolean[][]> splitToArraysBoolean(boolean[][] baseArray) {
         List<boolean[][]> listOfArrays = new ArrayList<>();
         boolean[][] array;
+        int rows = baseArray.length / 2;
+        int cols = baseArray[0].length / 2;
         if ((baseArray == null) && (baseArray.length == 0)) {
             return listOfArrays;
         }
@@ -272,10 +274,6 @@ public class UtilsFunctions {
         return listOfArrays;
     }
 
-
-    public static List<boolean[][]> splitToArraysBoolean(boolean[][] baseArray) {
-        return splitToArraysBoolean(baseArray, 8, 8);
-    }
 
     public static int countBoolean(boolean[][] array, boolean countable) {
         int count = 0;

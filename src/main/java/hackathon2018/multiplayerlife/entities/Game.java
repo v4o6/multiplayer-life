@@ -82,7 +82,7 @@ public class Game {
 
     public List<Player.Result> getPlayerResults(final LifeState state) {
         final List<Player.Result> playerResults = new ArrayList<>();
-        List<boolean[][]> results = UtilsFunctions.splitToArraysBoolean(state.getData(), 8, 8);
+        List<boolean[][]> results = UtilsFunctions.splitToArraysBoolean(state.getData());
         synchronized (mutex) {
             int count = 0;
             for (final Player player : players) {
