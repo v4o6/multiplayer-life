@@ -175,11 +175,33 @@ public class UtilsFunctions {
     }
 
     /**
-     * Combine To Array
+     * Split To Arrays
      *
-     * @param listOfArrays listOfArrays to consider
-     * @return returns 2D combined array
+     * @param baseArray baseArray to consider
+     * @param <T>
+     * @return
      */
+    public static <T> List<T[][]> splitToArrays(T[][] baseArray, int rows, int cols) {
+        List<T[][]> listOfArrays = new ArrayList<>();
+        T[][] array;
+        if ((baseArray == null) && (baseArray.length == 0)) {
+            return listOfArrays;
+        }
+        for (int c = 0; c < OFFSETS.length; c++) {
+            array = (T[][]) new Object[rows][cols];
+            for (int row = 0; row < array.length; row++) {
+                for (int col = 0; col < array[row].length; col++) {
+                    array[row][col] = baseArray[row + (OFFSETS[c][0] * rows)][col + (OFFSETS[c][1] * cols)];
+                }
+            }
+            listOfArrays.add(array);
+        }
+        return listOfArrays;
+    }
+
+
+    //-------------------------------------------------------------
+
     public static boolean[][] combineToArrayBoolean(List<boolean[][]> listOfArrays) {
         boolean[][] result = null;
         if (listOfArrays == null && listOfArrays.isEmpty() || listOfArrays.size() != vArrays * hArrays) {
@@ -211,21 +233,15 @@ public class UtilsFunctions {
         return result;
     }
 
-    /**
-     * Split To Arrays
-     *
-     * @param baseArray baseArray to consider
-     * @param <T>
-     * @return
-     */
-    public static <T> List<T[][]> splitToArrays(T[][] baseArray, int rows, int cols) {
-        List<T[][]> listOfArrays = new ArrayList<>();
-        T[][] array;
+
+    public static List<boolean[][]> splitToArraysBoolean(boolean[][] baseArray, int rows, int cols) {
+        List<boolean[][]> listOfArrays = new ArrayList<>();
+        boolean[][] array;
         if ((baseArray == null) && (baseArray.length == 0)) {
             return listOfArrays;
         }
         for (int c = 0; c < OFFSETS.length; c++) {
-            array = (T[][]) new Object[rows][cols];
+            array = new boolean[rows][cols];
             for (int row = 0; row < array.length; row++) {
                 for (int col = 0; col < array[row].length; col++) {
                     array[row][col] = baseArray[row + (OFFSETS[c][0] * rows)][col + (OFFSETS[c][1] * cols)];
@@ -236,8 +252,9 @@ public class UtilsFunctions {
         return listOfArrays;
     }
 
-    public static <T> List<T[][]> splitToArrays(T[][] baseArray) {
-        return splitToArrays(baseArray, 8, 8);
+
+    public static List<boolean[][]> splitToArraysBoolean(boolean[][] baseArray) {
+        return splitToArraysBoolean(baseArray, 8, 8);
     }
 
     /**
@@ -344,10 +361,12 @@ public class UtilsFunctions {
 
 
     public static <K> void main(String[] args) {
-//        convertIntToBoolArr(convertBoolToIntArr(combineToArrayBoolean(playersBoolean)));
+
+        splitToArraysBoolean(combineToArrayBoolean(playersBoolean));
+
+        //        convertIntToBoolArr(convertBoolToIntArr(combineToArrayBoolean(playersBoolean)));
 //        convertBoolToIntArr(combineToArrayBoolean(playersBoolean));
         combineToArrayBoolean(playersBoolean);
-        splitToArrays(multiple);
     }
 
 }
