@@ -382,6 +382,7 @@ let startGeneration = 0;
   }
 
   function renderGrid(booleanGrid) {
+    TWO.clear();
     for (let j = 0; j < ROWNUMBER; j++) {
       for (let i = 0; i < COLUMNNUMBER; i++) {
         let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT / 2, CELLWIDTH * j + CELLWIDTH / 2, CELLHEIGHT,
