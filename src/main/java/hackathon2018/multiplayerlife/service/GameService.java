@@ -16,6 +16,11 @@ public class GameService {
   private TreeMap<Long, Game> games =
       new TreeMap<Long, Game>(Comparator.reverseOrder());
 
+  /*
+   * Map between gameId and gameState
+   */
+  //private Map<Long, >
+
   public Player registerPlayer(final String name) {
     // ... create player (no history/re-use; users create a new player for each game)
     Player newPlayer = new Player(name);
@@ -73,8 +78,17 @@ public class GameService {
     Player player = getPlayer(playerId);
     player.setState(state);
 
-    // TODO kenny
-    // if all players are ready, call game.
+    // if all players are ready, call Game.buildState()
+    Game game = getGameByPlayer(playerId);
+    boolean ready = true;
+    for (Player p : game.getPlayers()) {
+      if (p.getState() == null) {
+        ready = false;
+      }
+    }
+    if (ready) {
+      game.buildState();
+    }
   }
 
   private Game createNewGame() {

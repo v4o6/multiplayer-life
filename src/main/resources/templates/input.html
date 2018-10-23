@@ -45,7 +45,7 @@
 
 <script th:inline="javascript">
   const PLAYER_ID = [[${playerId}]];
-
+  const GAME_ID = [[${gameId}]];
   const GRIDHEIGHT = 800;
   const GRIDWIDTH = 800;
   const ROWNUMBER = 8;
@@ -70,6 +70,28 @@
       rect._renderer.elem.addEventListener("click", changeCellColor, false);
     }
   }
+
+  //run a status poller
+  setInterval(()=> {
+
+    let player1 = $('#player1-ready')[0],
+        player2 = $('#player2-ready')[0],
+        player3 = $('#player3-ready')[0],
+        player4 = $("#player4-ready")[0];
+    $.get('/input/statuses/<gameId>', {
+      gameId: GAME_ID
+    }).complete((data, textStatus, jqXHR) => {
+      player1.checked = data[0].ready;
+      player2.checked = data[1].ready;
+      player3.checked = data[2].ready;
+      player4.checked = data[3].ready;
+
+      //redirect to the game page if all 4 players are checked.
+      if (player1.checked && player2.checked && player3.checked && player4.checked) {
+        window.location.href = "/game.html";
+      }
+    })
+  }, 1000);
 
   function buildConfigurationFromInput() {
     let gridList = Array.prototype.slice.call($("#two_0")[0].childNodes);

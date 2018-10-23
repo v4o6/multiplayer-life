@@ -65,17 +65,12 @@ public class Game {
         synchronized (mutex) {
             List<boolean[][]> listOfArrays = new ArrayList<>();
             for (final Player player : players) {
-                if (player == null ||
-                        player.getState().getData() == null ||
-                        player.getState().getData().length == 0 ||
-                        player.getState().getData()[0].length == 0) {
-                    break;
-                }
+                if (player == null || player.getState().getData() == null) {break;}
                 boolean[][] playerData = player.getState().getData();
                 listOfArrays.add(playerData);
             }
             boolean[][] playersData = UtilsFunctions.combineToArrayBoolean(listOfArrays);
-          this.state = new LifeState(playersData);
+            this.state = new LifeState(playersData);
         }
     }
 
@@ -86,8 +81,17 @@ public class Game {
     }
 
     public List<Player.Result> getPlayerResults(final LifeState state) {
-      // TODO dzmitry
-      return null;
+        final List<Player.Result> playerResults = new ArrayList<>();
+        List<boolean[][]> results = UtilsFunctions.splitToArraysBoolean(state.getData(), 8, 8);
+        synchronized (mutex) {
+            int count = 0;
+            for (final Player player : players) {
+                if (results == null || player == null) {break;}
+                playerResults.add(Player.Result.of(player, new LifeState(results.get(count))));
+                count++;
+            }
+        }
+        return playerResults;
     }
 
 }

@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../static/javascript/two.min.js"></script>
+    <script src="/javascript/two.min.js"></script>
+    <!--<script src="../static/javascript/two.min.js"></script>-->
     <title>game in progress!</title>
 </head>
 <body>
 <div id="canvas"></div>
+<div id="counter"></div>
 </body>
-<script type="text/javascript" language="JavaScript">
-  const NUMBER_OF_GENERATIONS = 10000;
-  const TIME_BETWEEN_EACH_TICK = 500;
+<script th:inline="javascript">
+  const GAME_ID = 1;
+      // [[${game_id}]];
+  const NUMBER_OF_GENERATIONS = 5000;
+  const TIME_BETWEEN_EACH_TICK = 10;
   const GRIDHEIGHT = 800;
   const GRIDWIDTH = 800;
   const ROWNUMBER = 16;
@@ -29,309 +33,335 @@
 
   //TODO populate via calling backend API somehow.
 
-  let gameConfig = [
-    [
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true
-    ],
-    [
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true
-    ],
-    [
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true
-    ],
-    [
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true
-    ],
-    [
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true
-    ],
-    [
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true
-    ],
-    [
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true
-    ],
-    [
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true
-    ],
-  ];
-let startGeneration = 0;
+  let gameConfig;
+  $.get('/game/data?gameId=<game_id>', {
+    gameId: GAME_ID
+  }).complete((data, textStatus, jqXHR) => {
+        gameConfig = data.data;
+  });
+  // = [
+  //         [
+  //     true,
+  //     true,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false
+  //   ],
+  //   [
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true
+  //   ],
+  //   [
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false
+  //   ],
+  //   [
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true
+  //   ],
+  //   [
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false
+  //   ],
+  //   [
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true
+  //   ],
+  //   [
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false
+  //   ],
+  //   [
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true
+  //   ],
+  //   [
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false
+  //   ],
+  //   [
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true
+  //   ],
+  //   [
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false
+  //   ],
+  //   [
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true
+  //   ],
+  //   [
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false
+  //   ],
+  //   [
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true
+  //   ],
+  //   [
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false
+  //   ],
+  //   [
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true,
+  //     false,
+  //     true
+  //   ],
+  // ];
+  let startGeneration = 0;
+
+  //set the initial field.
+  renderGrid(gameConfig);
+
   //game loops
   let intervalId = setInterval(() => {
+    updateGrid(gameConfig);
     renderGrid(gameConfig);
-    let tempConfig = updateGrid(gameConfig);
-    renderGrid(tempConfig);
-    gameConfig = tempConfig;
     startGeneration++;
     if (startGeneration >= NUMBER_OF_GENERATIONS) {
+      //perform cleanup; submit results to server.
       clearInterval(intervalId);
+      renderGrid(gameConfig);
+      submitResults(gameConfig);
     }
   }, TIME_BETWEEN_EACH_TICK);
 
+  function submitResults(gameConfig) {
+    let httpRequest = $.post("/game/submit", {
+      gameId: GAME_ID,
+      data: gameConfig
+    }).complete(handleStateChange);
+  }
+
+  function handleStateChange(xhr, status) {
+    if (status === XMLHttpRequest.DONE) {
+      window.alert("game over! submitted results.");
+    }
+    else {
+      window.alert('there was a problem with the request');
+    }
+  }
 
   function updateGrid(booleanGrid) {
     for (let j = 0; j < ROWNUMBER; j++) {
@@ -361,7 +391,7 @@ let startGeneration = 0;
   }
 
   function isAlive(liveCount, currentStatus) {
-    if (currentStatus){
+    if (currentStatus) {
       switch (liveCount) {
       case 2:
       case 3:
@@ -370,28 +400,30 @@ let startGeneration = 0;
         return false;
       }
     }
-    else
-      {
-        return (liveCount === 3);
-      }
+    else {
+      return (liveCount === 3);
+    }
 
   }
+
   //returns a wraparaound number between 0 and 15.
   function bitwiseWrap(number) {
     return number << 28 >>> 28;
   }
 
   function renderGrid(booleanGrid) {
+    TWO.clear();
     for (let j = 0; j < ROWNUMBER; j++) {
       for (let i = 0; i < COLUMNNUMBER; i++) {
         let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT / 2, CELLWIDTH * j + CELLWIDTH / 2, CELLHEIGHT,
             CELLWIDTH);
-        rect.fill = booleanGrid[i][j] ? ALIVE : DEAD;
+        rect.fill = booleanGrid[j][i] ? ALIVE : DEAD;
         rect.stroke = '#000000';
         rect.lineWidth = '5px';
       }
     }
     TWO.update();
+    $('#counter')[0].innerHTML = "current generation: " + startGeneration;
   }
 
   function changeCellColor(event) {
@@ -404,11 +436,6 @@ let startGeneration = 0;
       event.target.attributes.fill.value = ALIVE;
       break;
     }
-  }
-
-  //given row and column number, returns the index of the 1d-array.
-  function getArrayIndexFromGridCoordinates(row, column) {
-    return ROWNUMBER * row + column;
   }
 
 </script>
