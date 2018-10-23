@@ -10,11 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class Views {
   private static final Logger logger = LoggerFactory.getLogger(Views.class);
 
-  @GetMapping("/")
-  public String index() {
-    return "index";
-  }
-
   @GetMapping("/input/{userId}")
   public String input(@PathVariable Long userId) {
     // TODO
