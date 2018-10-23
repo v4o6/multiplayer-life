@@ -3,35 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="javaScript/two.min.js"></script>
+    <script src="../static/javascript/two.min.js"></script>
     <title>game in progress!</title>
 </head>
 <body>
-<div id = "canvas"></div>
+<div id="canvas"></div>
 </body>
-
 <script type="text/javascript" language="JavaScript">
-  //TODO populate via calling backend API somehow.
-  const INITIAL_CONFIG = [
-    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
-    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
-    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
-    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
-    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
-    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
-    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
-    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
-    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
-    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
-    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
-    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
-    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
-    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
-    [true,false,true,false,true,false,true,false,true,false,true,false,true,false,true,false],
-    [false,true,false,true,false,true,false,true,false,true,false,true,false,true,false,true],
-  ];
-  const PLAYER_ID = 1;
-
+  const NUMBER_OF_GENERATIONS = 10000;
+  const TIME_BETWEEN_EACH_TICK = 500;
   const GRIDHEIGHT = 800;
   const GRIDWIDTH = 800;
   const ROWNUMBER = 16;
@@ -46,17 +26,373 @@
     height: GRIDHEIGHT
   };
   const TWO = new Two(params).appendTo(CANVAS);
-  for (let j = 0; j < ROWNUMBER; j++) {
-    for (let i = 0; i < COLUMNNUMBER; i++) {
-      let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT/2, CELLWIDTH * j + CELLWIDTH/2, CELLHEIGHT, CELLWIDTH);
-      rect.fill = INITIAL_CONFIG[i][j] ? ALIVE : DEAD;
-      rect.stroke = '#000000';
-      rect.lineWidth = '5px';
-      TWO.update();
-      rect._renderer.elem.addEventListener("click", changeCellColor, false);
+
+  //TODO populate via calling backend API somehow.
+
+  let gameConfig = [
+    [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+    [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+    [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+    [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+    [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+    [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+    [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+    [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+  ];
+let startGeneration = 0;
+  //game loops
+  let intervalId = setInterval(() => {
+    renderGrid(gameConfig);
+    let tempConfig = updateGrid(gameConfig);
+    renderGrid(tempConfig);
+    gameConfig = tempConfig;
+    startGeneration++;
+    if (startGeneration >= NUMBER_OF_GENERATIONS) {
+      clearInterval(intervalId);
+    }
+  }, TIME_BETWEEN_EACH_TICK);
+
+
+  function updateGrid(booleanGrid) {
+    for (let j = 0; j < ROWNUMBER; j++) {
+      for (let i = 0; i < COLUMNNUMBER; i++) {
+        let neighbhours = [
+          booleanGrid[bitwiseWrap(i - 1)][bitwiseWrap(j - 1)],
+          booleanGrid[bitwiseWrap(i - 1)][j],
+          booleanGrid[bitwiseWrap(i - 1)][bitwiseWrap(j + 1)],
+          booleanGrid[i][bitwiseWrap(j - 1)],
+          booleanGrid[i][bitwiseWrap(j + 1)],
+          booleanGrid[bitwiseWrap(i + 1)][bitwiseWrap(j - 1)],
+          booleanGrid[bitwiseWrap(i + 1)][j],
+          booleanGrid[bitwiseWrap(i + 1)][bitwiseWrap(j + 1)]
+        ];
+        let liveCount = 0;
+        let deadCount = 0;
+        neighbhours.forEach((neighbhour) => {
+          if (neighbhour) {
+            liveCount++;
+          }
+        });
+
+        booleanGrid[i][j] = isAlive(liveCount, booleanGrid[i][j]);
+      }
+
     }
   }
 
+  function isAlive(liveCount, currentStatus) {
+    if (currentStatus){
+      switch (liveCount) {
+      case 2:
+      case 3:
+        return true;
+      default:
+        return false;
+      }
+    }
+    else
+      {
+        return (liveCount === 3);
+      }
+
+  }
+  //returns a wraparaound number between 0 and 15.
+  function bitwiseWrap(number) {
+    return number << 28 >>> 28;
+  }
+
+  function renderGrid(booleanGrid) {
+    for (let j = 0; j < ROWNUMBER; j++) {
+      for (let i = 0; i < COLUMNNUMBER; i++) {
+        let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT / 2, CELLWIDTH * j + CELLWIDTH / 2, CELLHEIGHT,
+            CELLWIDTH);
+        rect.fill = booleanGrid[i][j] ? ALIVE : DEAD;
+        rect.stroke = '#000000';
+        rect.lineWidth = '5px';
+      }
+    }
+    TWO.update();
+  }
 
   function changeCellColor(event) {
     switch (event.target.attributes.fill.value) {
@@ -68,6 +404,11 @@
       event.target.attributes.fill.value = ALIVE;
       break;
     }
+  }
+
+  //given row and column number, returns the index of the 1d-array.
+  function getArrayIndexFromGridCoordinates(row, column) {
+    return ROWNUMBER * row + column;
   }
 
 </script>
