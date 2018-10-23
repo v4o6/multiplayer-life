@@ -1,12 +1,15 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="javaScript/two.min.js"></script>
-    <title>initial configuration</title>
+    <script src="/javaScript/two.min.js"></script>
+    <title>Life Input</title>
 </head>
 
 <body>
+
+<h2 th:text="|Hello, ${player.name}.  Input your life:|">Input your player life.</h2>
+
 <!--TODO: call backend and populate these dynamically.-->
 <div id='player1'> username1</div>
 <div id='player2'> username2</div>
@@ -16,9 +19,8 @@
 <button onclick="buildConfigurationFromInput()">submit</button>
 </body>
 
-<script type="text/javascript" language="JavaScript">
-  //TODO player ID may be manipulated?
-  const PLAYER_ID = 1;
+<script th:inline="javascript">
+  const PLAYER_ID = [[${playerId}]];
 
   const GRIDHEIGHT = 800;
   const GRIDWIDTH = 800;

@@ -1,9 +1,8 @@
 package hackathon2018.multiplayerlife.entities;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-
-import javafx.geometry.BoundingBox;
 
 public class Game {
 
@@ -30,10 +29,30 @@ public class Game {
     }
   }
 
-  public Player[] getPlayers() {
+  public List<Player> getPlayers() {
+    final ArrayList<Player> list = new ArrayList<>();
     synchronized (mutex) {
-      return Arrays.copyOf(players, players.length);
+      for (final Player player : players) {
+        if (player == null) {
+          break;
+        }
+        list.add(player);
+      }
     }
+    return list;
+  }
+
+  public List<Player.Status> getPlayerStatuses() {
+    final List<Player.Status> statusList = new ArrayList<>();
+    synchronized (mutex) {
+      for (final Player player : players) {
+        if (player == null) {
+          break;
+        }
+        statusList.add(Player.Status.of(player));
+      }
+    }
+    return statusList;
   }
 
   // call when all players are ready

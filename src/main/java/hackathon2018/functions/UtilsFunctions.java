@@ -1,12 +1,10 @@
 package hackathon2018.functions;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
-class ArrayFunctions {
-
+public class UtilsFunctions {
 
     public static Object[][] playerA = new Object[][]{
             {"a", "a", "a", "a", "a", "a", "a", "a"},

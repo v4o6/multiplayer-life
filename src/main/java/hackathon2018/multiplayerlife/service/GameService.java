@@ -1,7 +1,9 @@
 package hackathon2018.multiplayerlife.service;
 
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.TreeMap;
 
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import hackathon2018.multiplayerlife.entities.Player;
 @Service
 public class GameService {
 
-  private static TreeMap<Long, Game> games =
+  private TreeMap<Long, Game> games =
       new TreeMap<Long, Game>(Comparator.reverseOrder());
 
   public Player registerPlayer(final String name) {
