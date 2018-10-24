@@ -80,6 +80,11 @@ public class Game {
         }
     }
 
+    /**
+     * Get Player Results
+     * @param state
+     * @return
+     */
     public List<Player.Result> getPlayerResults(final LifeState state) {
         final List<Player.Result> playerResults = new ArrayList<>();
         List<boolean[][]> results = UtilsFunctions.splitToArraysBoolean(state.getData());
