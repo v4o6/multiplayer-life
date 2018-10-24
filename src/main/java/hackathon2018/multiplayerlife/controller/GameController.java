@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hackathon2018.multiplayerlife.entities.Game;
 import hackathon2018.multiplayerlife.entities.LifeState;
+import hackathon2018.multiplayerlife.entities.Result;
 import hackathon2018.multiplayerlife.service.GameService;
 
 @Controller
@@ -72,7 +73,9 @@ public class GameController {
     }
 
     final LifeState state = new LifeState(data);
-    // TODO kenny
+    Game game = gameService.getGame(gameId);
+    Result result = new Result(game, state);
+    gameService.writeGameResult(gameId, result);
 
     return true;
   }

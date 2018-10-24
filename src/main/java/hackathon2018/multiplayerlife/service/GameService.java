@@ -1,7 +1,6 @@
 package hackathon2018.multiplayerlife.service;
 
 import java.util.AbstractMap.SimpleEntry;
-import java.util.Comparator;
 import java.util.TreeMap;
 
 import org.springframework.stereotype.Service;
@@ -9,17 +8,17 @@ import org.springframework.stereotype.Service;
 import hackathon2018.multiplayerlife.entities.Game;
 import hackathon2018.multiplayerlife.entities.LifeState;
 import hackathon2018.multiplayerlife.entities.Player;
+import hackathon2018.multiplayerlife.entities.Result;
 
 @Service
 public class GameService {
 
-  private TreeMap<Long, Game> games =
-      new TreeMap<Long, Game>(Comparator.reverseOrder());
+  private TreeMap<Long, Game> games = new TreeMap<Long, Game>();
 
   /*
-   * Map between gameId and gameState
+   * Map between gameId and Result (game)
    */
-  //private Map<Long, >
+  private TreeMap<Long, Result> gameResults = new TreeMap<Long, Result>();
 
   public Player registerPlayer(final String name) {
     // ... create player (no history/re-use; users create a new player for each game)
@@ -30,7 +29,7 @@ public class GameService {
       game = createNewGame();
     }
     else {
-      game = games.firstEntry().getValue();
+      game = games.lastEntry().getValue();
     }
     while (!game.addPlayer(newPlayer)) {
       game = createNewGame();
@@ -96,6 +95,18 @@ public class GameService {
     Long newGameId = newGame.getId();
     games.put(newGameId, newGame);
     return newGame;
+  }
+
+  public void writeGameResult(Long gameId, Result result) {
+    gameResults.put(gameId, result);
+  }
+
+  public Result getGameResult(Long gameId) {
+    return gameResults.get(gameId);
+  }
+
+  public Result getLastResult() {
+    return gameResults.lastEntry().getValue();
   }
 
 }
