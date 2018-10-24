@@ -8,19 +8,57 @@
     <title>game in progress!</title>
 </head>
 <body>
-<div id="canvas"></div>
-<div id="counter"></div>
+
+<table>
+    <tr>
+        <td>
+            <div id="canvas"></div>
+        </td>
+        <td>
+            <table>
+                <thead>
+                    <td><h4>Player</h4></td>
+                </thead>
+                <tbody>
+                <tr id="player1" th:with="player1=${statuses[0]}">
+                    <td>
+                        <div id="player1-name" th:text="${player1.name}">o1n</div>
+                    </td>
+                </tr>
+                <tr id="player2" th:with="player2=${statuses[1]}">
+                    <td>
+                        <div id="player2-name" th:text="${player2.name}">t20</div>
+                    </td>
+                </tr>
+                <tr id="player3" th:with="player3=${statuses[2]}">
+                    <td>
+                        <div id="player3-name" th:text="${player3.name}">3re</div>
+                    </td>
+                </tr>
+                <tr id="player4" th:with="player4=${statuses[3]}">
+                    <td>
+                        <div id="player4-name" th:text="${player4.name}">4r0</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="counter"></div>
+        </td>
+    </tr>
+</table>
+
 </body>
 <script th:inline="javascript">
-  const GAME_ID = [[${game_id}]];
-  const NUMBER_OF_GENERATIONS = 5000;
+  const GAME_ID = [[${gameId}]];
+  const NUMBER_OF_GENERATIONS = 200;
   const TIME_BETWEEN_EACH_TICK = 10;
   const GRIDHEIGHT = 800;
   const GRIDWIDTH = 800;
-  const ROWNUMBER = 16;
-  const COLUMNNUMBER = 16;
-  const CELLHEIGHT = 50;
-  const CELLWIDTH = 50;
+  const ROWNUMBER = [[${gameSize}]];
+  const COLUMNNUMBER = [[${gameSize}]];
+  const ZERO_BITS = Math.clz32([[${gameSize}]] - 1);
+  const CELLHEIGHT = GRIDHEIGHT / ROWNUMBER;
+  const CELLWIDTH = GRIDWIDTH / ROWNUMBER;
   const ALIVE = "#000000";
   const DEAD = "#FFFFFF";
   const CANVAS = document.getElementById("canvas");
@@ -31,7 +69,7 @@
   const TWO = new Two(params).appendTo(CANVAS);
   let gameConfig;
   let startGeneration = 0;
-  $.get('/game/data/', {
+  $.get('/game/data', {
     gameId: GAME_ID
   }).done((data, textStatus, jqXHR) => {
     gameConfig = data.data;
@@ -341,14 +379,20 @@
         clearInterval(intervalId);
         renderGrid(gameConfig);
         submitResults(gameConfig);
+        //redirect to result page
+        setTimeout(function () {
+          window.location.href = "/result/" + GAME_ID;
+        }, 2000);
       }
     }, TIME_BETWEEN_EACH_TICK);
   }
   function submitResults(gameConfig) {
     let httpRequest = $.post("/game/submit", {
-      gameId: GAME_ID,
-      data: gameConfig
-    }).complete(handleStateChange);
+          gameId: GAME_ID,
+          data: JSON.stringify(gameConfig)
+        }
+        // , handleStateChange
+    );
   }
 
   function handleStateChange(xhr, status) {
@@ -403,9 +447,9 @@
 
   }
 
-  //returns a wraparaound number between 0 and 15.
+  //returns a wraparaound number between 0 and GRID_SIZE - 1.
   function bitwiseWrap(number) {
-    return number << 28 >>> 28;
+    return number << ZERO_BITS >>> ZERO_BITS;
   }
 
   function renderGrid(booleanGrid) {

@@ -35,6 +35,7 @@ public class InputController {
     final Game game = gameService.getGameByPlayer(playerId);
     model.addAttribute("gameId", game.getId());
     model.addAttribute("statuses", game.getPlayerStatuses());
+    model.addAttribute("playerSize", gameService.getPlayerSize());
     return "input";
   }
 

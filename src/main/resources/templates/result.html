@@ -1,10 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/javascript/two.min.js"></script>
+    <title>Result of Life</title>
 </head>
+
 <body>
+<h2 th:text="|Hey, the winner is ${winner.name}. COUNT: ${winner.count}|">Hey, the winner is won 20</h2>
+
+<table>
+    <tr>
+        <td th:with="result1=${results[0]}">
+            <h4 th:text="${result1.name}">un1</h4>
+            <div th:text="|Count: ${result1.count}|">1</div>
+            <div id="canvas1"></div>
+        </td>
+        <td th:with="result2=${results[1]}">
+            <h4 th:text="${result2.name}">t0w</h4>
+            <div th:text="|Count: ${result2.count}|">20</div>
+            <div id="canvas2"></div>
+        </td>
+    </tr>
+    <tr>
+        <td th:with="result3=${results[2]}">
+            <h4 th:text="${result3.name}">se3</h4>
+            <div th:text="|Count: ${result3.count}|">9</div>
+            <div id="canvas3"></div>
+        </td>
+        <td th:with="result4=${results[3]}">
+            <h4 th:text="${result4.name}">f04</h4>
+            <div th:text="|Count: ${result4.count}|">0</div>
+            <div id="canvas4"></div>
+        </td>
+    </tr>
+</table>
 
 </body>
+
+<script th:inline="javascript">
+  const GAME_ID = [[${gameId}]];
+  const PLAYER_IDS = [
+    [[${results[0].id}]],
+    [[${results[1].id}]],
+    [[${results[2].id}]],
+    [[${results[3].id}]]
+  ];
+  const GRIDHEIGHT = 400;
+  const GRIDWIDTH = 400;
+  const ROWNUMBER = [[${playerSize}]];
+  const COLUMNNUMBER = [[${playerSize}]];
+  const CELLHEIGHT = GRIDHEIGHT / ROWNUMBER;
+  const CELLWIDTH = GRIDWIDTH / ROWNUMBER;
+  const ALIVE = "#000000";
+  const DEAD = "#FFFFFF";
+  const params = {
+    width: GRIDWIDTH,
+    height: GRIDHEIGHT
+  };
+  const TWOS = [
+    new Two(params).appendTo(document.getElementById("canvas1")),
+    new Two(params).appendTo(document.getElementById("canvas2")),
+    new Two(params).appendTo(document.getElementById("canvas3")),
+    new Two(params).appendTo(document.getElementById("canvas4"))
+  ];
+  for (let i = 0; i < PLAYER_IDS.length; i++) {
+    let callback = function () {
+      let closure_i = i;
+      return function (data, textStatus, jqXHR) {
+        renderGrid(data.data, TWOS[closure_i]);
+      };
+    }();
+    $.get('/result/data', {
+      gameId: GAME_ID,
+      playerId: PLAYER_IDS[i]
+    }).done(callback);
+  }
+
+  function renderGrid(booleanGrid, TWO) {
+    TWO.clear();
+    for (let j = 0; j < ROWNUMBER; j++) {
+      for (let i = 0; i < COLUMNNUMBER; i++) {
+        let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT / 2, CELLWIDTH * j + CELLWIDTH / 2, CELLHEIGHT,
+            CELLWIDTH);
+        rect.fill = booleanGrid[j][i] ? ALIVE : DEAD;
+        rect.stroke = '#000000';
+        rect.lineWidth = '5px';
+      }
+    }
+    TWO.update();
+  }
+
+</script>
+
 </html>

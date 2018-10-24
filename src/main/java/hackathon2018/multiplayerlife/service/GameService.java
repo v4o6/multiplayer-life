@@ -13,12 +13,22 @@ import hackathon2018.multiplayerlife.entities.Result;
 @Service
 public class GameService {
 
+  private static int gameSize = 32;
+
   private TreeMap<Long, Game> games = new TreeMap<Long, Game>();
 
   /*
    * Map between gameId and Result (game)
    */
   private TreeMap<Long, Result> gameResults = new TreeMap<Long, Result>();
+
+  public int getPlayerSize() {
+    return gameSize/2;
+  }
+
+  public int getGameSize() {
+    return gameSize;
+  }
 
   public Player registerPlayer(final String name) {
     // ... create player (no history/re-use; users create a new player for each game)

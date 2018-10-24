@@ -29,7 +29,7 @@ public class Result {
             list.add(result.getCount());
         }
         int maxCount = Collections.max(list);
-        int indexOfMax = results.indexOf(maxCount);
+        int indexOfMax = list.indexOf(maxCount);
         return results.get(indexOfMax);
     }
 

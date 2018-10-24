@@ -32,31 +32,37 @@ public class GameController {
     model.addAttribute("gameId", gameId);
     final Game game = gameService.getGame(gameId);
     model.addAttribute("statuses", game.getPlayerStatuses());
+    model.addAttribute("gameSize", gameService.getGameSize());
     return "game";
   }
 
   @GetMapping("/game/data")
   @ResponseBody
   public LifeState getInitialData(@RequestParam("gameId") final long gameId) {
-//    return gameService.getGame(gameId).getState();
-    return new LifeState(new boolean[][] {
-        {true, false, false, true, false, false, true, true, true, true, false, true, false, false, true, false},
-        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
-        {false, false, true, true, true, false, false, true, true, false, false, true, false, false, true, true},
-        {true, true, false, true, false, false, true, false, false, false, true, true, true, false, false, true},
-        {false, false, true, true, true, false, false, true, true, true, false, true, false, false, true, false},
-        {true, false, false, true, false, false, true, true, false, false, true, true, true, false, false, true},
-        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
-        {true, true, false, true, false, false, true, false, true, false, false, true, false, false, true, true},
-        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
-        {true, true, false, true, false, false, true, false, false, false, true, true, true, false, false, true},
-        {true, false, false, true, false, false, true, true, false, false, true, true, true, false, false, true},
-        {true, true, false, true, false, false, true, false, true, false, false, true, false, false, true, true},
-        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
-        {false, false, true, true, true, false, false, true, true, true, false, true, false, false, true, false},
-        {false, false, true, true, true, false, false, true, true, false, false, true, false, false, true, true},
-        {true, false, false, true, false, false, true, true, true, true, false, true, false, false, true, false}
-    });
+    final LifeState state = gameService.getGame(gameId).getState();
+    if (state == null) {
+      logger.warn("game {} not ready yet", gameId);
+    }
+
+    return state;
+//    return new LifeState(new boolean[][] {
+//        {true, false, false, true, false, false, true, true, true, true, false, true, false, false, true, false},
+//        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
+//        {false, false, true, true, true, false, false, true, true, false, false, true, false, false, true, true},
+//        {true, true, false, true, false, false, true, false, false, false, true, true, true, false, false, true},
+//        {false, false, true, true, true, false, false, true, true, true, false, true, false, false, true, false},
+//        {true, false, false, true, false, false, true, true, false, false, true, true, true, false, false, true},
+//        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
+//        {true, true, false, true, false, false, true, false, true, false, false, true, false, false, true, true},
+//        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
+//        {true, true, false, true, false, false, true, false, false, false, true, true, true, false, false, true},
+//        {true, false, false, true, false, false, true, true, false, false, true, true, true, false, false, true},
+//        {true, true, false, true, false, false, true, false, true, false, false, true, false, false, true, true},
+//        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
+//        {false, false, true, true, true, false, false, true, true, true, false, true, false, false, true, false},
+//        {false, false, true, true, true, false, false, true, true, false, false, true, false, false, true, true},
+//        {true, false, false, true, false, false, true, true, true, true, false, true, false, false, true, false}
+//    });
   }
 
   @PostMapping("/game/submit")
