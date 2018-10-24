@@ -99,9 +99,9 @@
       $('#player4-name')[0]
     ];
 
-    $.get('/input/statuses', {
+    $.get('/input/statuses/', {
       gameId: GAME_ID
-    }).complete((data, textStatus, jqXHR) => {
+    }).done((data, textStatus, jqXHR) => {
       data.forEach((entry) => {
         nameList[entry.id].text = entry.name;
         readyList[entry.id].checked = entry.ready;

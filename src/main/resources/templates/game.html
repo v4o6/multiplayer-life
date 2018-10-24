@@ -34,9 +34,9 @@
   //TODO populate via calling backend API somehow.
 
   let gameConfig;
-  $.get('/game/data?gameId=<game_id>', {
+  $.get('/game/data/', {
     gameId: GAME_ID
-  }).complete((data, textStatus, jqXHR) => {
+  }).done((data, textStatus, jqXHR) => {
         gameConfig = data.data;
   });
   // = [
