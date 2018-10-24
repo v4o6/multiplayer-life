@@ -24,10 +24,28 @@ public class Game {
             for (int i = 0; i < players.length; i++) {
                 if (players[i] == null) {
                     players[i] = player;
+                    setColor(player, i);
                     return true;  // return true if player was successfully added (enough space in game)
                 }
             }
             return false;
+        }
+    }
+
+    private void setColor(final Player player, final int i) {
+        switch (i) {
+            case 0:
+                player.setColor(Color.RED);
+                break;
+            case 1:
+                player.setColor(Color.GREEN);
+                break;
+            case 2:
+                player.setColor(Color.BLUE);
+                break;
+            case 3:
+                player.setColor(Color.YELLOW);
+                break;
         }
     }
 
@@ -63,13 +81,13 @@ public class Game {
      */
     public void buildState() {
         synchronized (mutex) {
-            List<boolean[][]> listOfArrays = new ArrayList<>();
+            List<int[][]> listOfArrays = new ArrayList<>();
             for (final Player player : players) {
                 if (player == null || player.getState().getData() == null) {break;}
-                boolean[][] playerData = player.getState().getData();
+                int[][] playerData = player.getState().getData();
                 listOfArrays.add(playerData);
             }
-            boolean[][] playersData = UtilsFunctions.combineToArrayBoolean(listOfArrays);
+            int[][] playersData = UtilsFunctions.combineToArrayBoolean(listOfArrays);
             this.state = new LifeState(playersData);
         }
     }
@@ -87,14 +105,18 @@ public class Game {
      */
     public List<Player.Result> getPlayerResults(final LifeState state) {
         final List<Player.Result> playerResults = new ArrayList<>();
-        List<boolean[][]> results = UtilsFunctions.splitToArraysBoolean(state.getData());
-        synchronized (mutex) {
-            int count = 0;
-            for (final Player player : players) {
-                if (results == null || player == null) {break;}
-                playerResults.add(Player.Result.of(player, new LifeState(results.get(count))));
-                count++;
-            }
+//        List<int[][]> results = UtilsFunctions.splitToArraysBoolean(state.getData());
+//        synchronized (mutex) {
+//            int count = 0;
+//            for (final Player player : players) {
+//                if (results == null || player == null) {break;}
+//                playerResults.add(Player.Result.of(player, new LifeState(results.get(count))));
+//                count++;
+//            }
+//        }
+        for (final Player player : players) {
+            final LifeState playerState = LifeState.forColor(state, player.getColor());
+            playerResults.add(Player.Result.of(player, playerState));
         }
         return playerResults;
     }

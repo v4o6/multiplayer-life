@@ -45,33 +45,15 @@ public class GameController {
     }
 
     return state;
-//    return new LifeState(new boolean[][] {
-//        {true, false, false, true, false, false, true, true, true, true, false, true, false, false, true, false},
-//        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
-//        {false, false, true, true, true, false, false, true, true, false, false, true, false, false, true, true},
-//        {true, true, false, true, false, false, true, false, false, false, true, true, true, false, false, true},
-//        {false, false, true, true, true, false, false, true, true, true, false, true, false, false, true, false},
-//        {true, false, false, true, false, false, true, true, false, false, true, true, true, false, false, true},
-//        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
-//        {true, true, false, true, false, false, true, false, true, false, false, true, false, false, true, true},
-//        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
-//        {true, true, false, true, false, false, true, false, false, false, true, true, true, false, false, true},
-//        {true, false, false, true, false, false, true, true, false, false, true, true, true, false, false, true},
-//        {true, true, false, true, false, false, true, false, true, false, false, true, false, false, true, true},
-//        {false, false, true, false, true, true, false, true, false, false, true, false, true, true, false, true},
-//        {false, false, true, true, true, false, false, true, true, true, false, true, false, false, true, false},
-//        {false, false, true, true, true, false, false, true, true, false, false, true, false, false, true, true},
-//        {true, false, false, true, false, false, true, true, true, true, false, true, false, false, true, false}
-//    });
   }
 
   @PostMapping("/game/submit")
   @ResponseBody
   public boolean submit(@RequestParam("gameId") final long gameId, @RequestParam("data") final String json) {
     final ObjectMapper mapper = new ObjectMapper();
-    final boolean[][] data;
+    final int[][] data;
     try {
-      data = mapper.readValue(json, boolean[][].class);
+      data = mapper.readValue(json, int[][].class);
     }
     catch (final IOException e) {
       logger.error("invalid input", e);

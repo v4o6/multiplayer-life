@@ -79,47 +79,47 @@ public class UtilsFunctions {
 
     //----------------------------------------------------------------------------------------
 
-    public static boolean[][] playerABoolean = new boolean[][]{
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
+    public static int[][] playerABoolean = new int[][]{
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
     };
-    public static boolean[][] playerBBoolean = new boolean[][]{
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
-            {true, true, true, true, true, true, true, true},
+    public static int[][] playerBBoolean = new int[][]{
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
     };
-    public static boolean[][] playerCBoolean = new boolean[][]{
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
+    public static int[][] playerCBoolean = new int[][]{
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
     };
-    public static boolean[][] playerDBoolean = new boolean[][]{
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false},
+    public static int[][] playerDBoolean = new int[][]{
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
     };
-    public static List<boolean[][]> playersBoolean = new ArrayList<boolean[][]>() {{
+    public static List<int[][]> playersBoolean = new ArrayList<int[][]>() {{
         add(playerABoolean);
         add(playerBBoolean);
         add(playerCBoolean);
@@ -222,27 +222,27 @@ public class UtilsFunctions {
 
     //-------------------------------------------------------------
 
-    public static boolean[][] combineToArrayBoolean(List<boolean[][]> listOfArrays) {
-        boolean[][] result = null;
+    public static int[][] combineToArrayBoolean(List<int[][]> listOfArrays) {
+        int[][] result = null;
         if (listOfArrays == null && listOfArrays.isEmpty() || listOfArrays.size() != vArrays * hArrays) {
             return result;
         }
         int commonLength = listOfArrays.get(0).length;
         // Check for common length consistency
-        for (boolean[][] array2D : listOfArrays) {
+        for (int[][] array2D : listOfArrays) {
             if (array2D.length != commonLength) {
                 return result;
             }
-            for (boolean[] array1D : array2D) {
+            for (int[] array1D : array2D) {
                 if (array1D.length != commonLength) {
                     return result;
                 }
             }
         }
         // Supply 2D output
-        result = new boolean[vArrays * commonLength][hArrays * commonLength];
+        result = new int[vArrays * commonLength][hArrays * commonLength];
         for (int c = 0; c < listOfArrays.size(); c++) {
-            boolean[][] array = listOfArrays.get(c);
+            int[][] array = listOfArrays.get(c);
             for (int row = 0; row < array.length; row++) {
                 for (int col = 0; col < array[row].length; col++) {
                     result[row + (OFFSETS[c][0] * commonLength)][col + (OFFSETS[c][1] * commonLength)] = array[row][col];
@@ -254,16 +254,16 @@ public class UtilsFunctions {
     }
 
 
-    public static List<boolean[][]> splitToArraysBoolean(boolean[][] baseArray) {
-        List<boolean[][]> listOfArrays = new ArrayList<>();
-        boolean[][] array;
+    public static List<int[][]> splitToArraysBoolean(int[][] baseArray) {
+        List<int[][]> listOfArrays = new ArrayList<>();
+        int[][] array;
         int rows = baseArray.length / 2;
         int cols = baseArray[0].length / 2;
         if ((baseArray == null) && (baseArray.length == 0)) {
             return listOfArrays;
         }
         for (int c = 0; c < OFFSETS.length; c++) {
-            array = new boolean[rows][cols];
+            array = new int[rows][cols];
             for (int row = 0; row < array.length; row++) {
                 for (int col = 0; col < array[row].length; col++) {
                     array[row][col] = baseArray[row + (OFFSETS[c][0] * rows)][col + (OFFSETS[c][1] * cols)];
@@ -275,7 +275,7 @@ public class UtilsFunctions {
     }
 
 
-    public static int countBoolean(boolean[][] array, boolean countable) {
+    public static int countBoolean(int[][] array, int countable) {
         int count = 0;
         if ((array != null)) {
             for (int row = 0; row < array.length; row++) {
@@ -289,13 +289,13 @@ public class UtilsFunctions {
         return count;
     }
 
-    public static int[][] convertBoolToIntArr(boolean[][] boolArr) {
+    public static int[][] convertBoolToIntArr(int[][] boolArr) {
         int[][] intArr = null;
         if (boolArr != null && boolArr.length != 0){
             intArr = new int[boolArr.length][boolArr[0].length];
             for (int row = 0; row < boolArr.length; row++) {
                 for (int col = 0; col < boolArr[row].length; col++) {
-                    if (boolArr[row][col] == true) {
+                    if (boolArr[row][col] == 1) {
                         intArr[row][col] = 1;
                     } else {
                         intArr[row][col] = 0;
@@ -370,7 +370,7 @@ public class UtilsFunctions {
     public static <K> void main(String[] args) {
 
 
-        countBoolean(playerABoolean, true);
+        countBoolean(playerABoolean, 1);
         splitToArraysBoolean(combineToArrayBoolean(playersBoolean));
 
         //        convertIntToBoolArr(convertBoolToIntArr(combineToArrayBoolean(playersBoolean)));

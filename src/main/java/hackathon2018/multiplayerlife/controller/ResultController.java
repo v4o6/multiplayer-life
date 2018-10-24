@@ -27,7 +27,7 @@ public class ResultController {
     final Result result = gameService.getGameResult(gameId);
     model.addAttribute("results", result.getResults());
     model.addAttribute("winner", result.getWinner());
-    model.addAttribute("playerSize", gameService.getPlayerSize());
+    model.addAttribute("gameSize", gameService.getGameSize());
     return "result";
   }
 

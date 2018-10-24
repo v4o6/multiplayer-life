@@ -47,11 +47,16 @@
   ];
   const GRIDHEIGHT = 400;
   const GRIDWIDTH = 400;
-  const ROWNUMBER = [[${playerSize}]];
-  const COLUMNNUMBER = [[${playerSize}]];
+  const ROWNUMBER = [[${gameSize}]];
+  const COLUMNNUMBER = [[${gameSize}]];
   const CELLHEIGHT = GRIDHEIGHT / ROWNUMBER;
   const CELLWIDTH = GRIDWIDTH / ROWNUMBER;
-  const ALIVE = "#000000";
+  const ALIVE = [
+    [[${results[0].color.code}]],
+    [[${results[1].color.code}]],
+    [[${results[2].color.code}]],
+    [[${results[3].color.code}]]
+  ];
   const DEAD = "#FFFFFF";
   const params = {
     width: GRIDWIDTH,
@@ -82,12 +87,27 @@
       for (let i = 0; i < COLUMNNUMBER; i++) {
         let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT / 2, CELLWIDTH * j + CELLWIDTH / 2, CELLHEIGHT,
             CELLWIDTH);
-        rect.fill = booleanGrid[j][i] ? ALIVE : DEAD;
+        rect.fill = getCellColor(booleanGrid[j][i]);
         rect.stroke = '#000000';
         rect.lineWidth = '5px';
       }
     }
     TWO.update();
+  }
+
+  function getCellColor(cell) {
+    switch (cell) {
+    case 0:
+      return DEAD;
+    case [[${results[0].color.value}]]:
+      return ALIVE[0];
+    case [[${results[1].color.value}]]:
+      return ALIVE[1];
+    case [[${results[2].color.value}]]:
+      return ALIVE[2];
+    case [[${results[3].color.value}]]:
+      return ALIVE[3];
+    }
   }
 
 </script>

@@ -49,9 +49,9 @@ public class InputController {
   @ResponseBody
   public boolean submit(@RequestParam("playerId") final long playerId, @RequestParam("data") final String json) {
     final ObjectMapper mapper = new ObjectMapper();
-    final boolean[][] data;
+    final int[][] data;
     try {
-      data = mapper.readValue(json, boolean[][].class);
+      data = mapper.readValue(json, int[][].class);
     }
     catch (final IOException e) {
       logger.error("invalid input", e);

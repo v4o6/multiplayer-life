@@ -60,7 +60,12 @@
   const ZERO_BITS = Math.clz32([[${gameSize}]] - 1);
   const CELLHEIGHT = GRIDHEIGHT / ROWNUMBER;
   const CELLWIDTH = GRIDWIDTH / ROWNUMBER;
-  const ALIVE = "#000000";
+  const ALIVE = [
+    [[${statuses[0].color.code}]],
+    [[${statuses[1].color.code}]],
+    [[${statuses[2].color.code}]],
+    [[${statuses[3].color.code}]]
+  ];
   const DEAD = "#FFFFFF";
   const CANVAS = document.getElementById("canvas");
   const params = {
@@ -81,296 +86,6 @@
     renderGrid(currentConfig);
     gameLoop();
   });
-  // = [
-  //         [
-  //     true,
-  //     true,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false
-  //   ],
-  //   [
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true
-  //   ],
-  //   [
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false
-  //   ],
-  //   [
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true
-  //   ],
-  //   [
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false
-  //   ],
-  //   [
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true
-  //   ],
-  //   [
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false
-  //   ],
-  //   [
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true
-  //   ],
-  //   [
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false
-  //   ],
-  //   [
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true
-  //   ],
-  //   [
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false
-  //   ],
-  //   [
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true
-  //   ],
-  //   [
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false
-  //   ],
-  //   [
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true
-  //   ],
-  //   [
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false
-  //   ],
-  //   [
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true,
-  //     false,
-  //     true
-  //   ],
-  // ];
   function gameLoop() {
     //game loops
     intervalId = setInterval(() => {
@@ -423,14 +138,16 @@
           booleanGrid[bitwiseWrap(i + 1)][bitwiseWrap(j + 1)]
         ];
         let liveCount = 0;
-        let deadCount = 0;
-        neighbours.forEach((neighbhour) => {
-          if (neighbhour) {
+        let liveColors = [];
+        let k = neighbours.length;
+        while (k && liveCount <= 3) {
+          if (isAlive(neighbours[--k])) {
             liveCount++;
+            liveColors.push(neighbours[k]);
           }
-        });
+        }
 
-        nextConfig[i][j] = isAlive(liveCount, booleanGrid[i][j]);
+        nextConfig[i][j] = updateCell(liveCount, booleanGrid[i][j], liveColors);
       }
     }
     // swap grids
@@ -438,20 +155,55 @@
     nextConfig = booleanGrid;
   }
 
-  function isAlive(liveCount, currentStatus) {
-    if (currentStatus) {
+  function updateCell(liveCount, cell, liveColors) {
+    if (isAlive(cell)) {
       switch (liveCount) {
       case 2:
       case 3:
-        return true;
+        return cell;
       default:
-        return false;
+        return 0;
       }
     }
     else {
-      return (liveCount === 3);
+      if (liveCount !== 3) {
+        return 0;
+      }
+      let color1, color2, color3, color4;
+      color1 = color2 = color3 = color4 = 0;
+      for (let i = 0; i < liveColors.length; i++) {
+        switch (getMask(liveColors[i])) {
+        case [[${statuses[0].color.mask}]]:
+          color1++; break;
+        case [[${statuses[1].color.mask}]]:
+          color2++; break;
+        case [[${statuses[2].color.mask}]]:
+          color3++; break;
+        case [[${statuses[3].color.mask}]]:
+          color4++; break;
+        }
+      }
+      if (color1 >= 2 || color2 === 1 && color3 === 1 && color4 === 1) {
+        return [[${statuses[0].color.value}]];
+      }
+      if (color2 >= 2 || color1 === 1 && color3 === 1 && color4 === 1) {
+        return [[${statuses[1].color.value}]];
+      }
+      if (color3 >= 2 || color1 === 1 && color2 === 1 && color4 === 1) {
+        return [[${statuses[2].color.value}]];
+      }
+      // color4
+      return [[${statuses[3].color.value}]];
     }
 
+  }
+
+  function isAlive(cell) {
+    return cell & 1;
+  }
+
+  function getMask(cell) {
+    return cell ^ 1;
   }
 
   //returns a wraparaound number between 0 and GRID_SIZE - 1.
@@ -465,7 +217,7 @@
       for (let i = 0; i < COLUMNNUMBER; i++) {
         let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT / 2, CELLWIDTH * j + CELLWIDTH / 2, CELLHEIGHT,
             CELLWIDTH);
-        rect.fill = booleanGrid[j][i] ? ALIVE : DEAD;
+        rect.fill = getCellColor(booleanGrid[j][i]);
         rect.stroke = '#000000';
         rect.lineWidth = '5px';
       }
@@ -474,15 +226,18 @@
     $('#counter')[0].innerHTML = "current generation: " + startGeneration;
   }
 
-  function changeCellColor(event) {
-    switch (event.target.attributes.fill.value) {
-    case ALIVE:
-      event.target.attributes.fill.value = DEAD;
-      break;
-    case DEAD:
-    default:
-      event.target.attributes.fill.value = ALIVE;
-      break;
+  function getCellColor(cell) {
+    switch (cell) {
+    case 0:
+      return DEAD;
+    case [[${statuses[0].color.value}]]:
+      return ALIVE[0];
+    case [[${statuses[1].color.value}]]:
+      return ALIVE[1];
+    case [[${statuses[2].color.value}]]:
+      return ALIVE[2];
+    case [[${statuses[3].color.value}]]:
+      return ALIVE[3];
     }
   }
 

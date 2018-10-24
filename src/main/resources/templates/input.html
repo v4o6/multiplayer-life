@@ -65,8 +65,10 @@
   const COLUMNNUMBER = [[${playerSize}]];
   const CELLHEIGHT = GRIDHEIGHT / ROWNUMBER;
   const CELLWIDTH = GRIDWIDTH / ROWNUMBER;
-  const ALIVE = "#000000";
+  const ALIVE = [[${player.color.code}]];
   const DEAD = "#FFFFFF";
+  const COLOR_MASK = [[${player.color.mask}]];
+  const COLOR_VALUE = [[${player.color.value}]];
   const CANVAS = document.getElementById("canvas");
   const params = {
     width: GRIDWIDTH,
@@ -123,10 +125,10 @@
       let index = gridList.indexOf(gridCell);
       switch (gridCell.attributes.fill.value) {
       case ALIVE:
-        gridBoolList[Math.floor(index / COLUMNNUMBER)][index % ROWNUMBER] = true;
+        gridBoolList[Math.floor(index / COLUMNNUMBER)][index % ROWNUMBER] = COLOR_VALUE;
         break;
       case DEAD:
-        gridBoolList[Math.floor(index / COLUMNNUMBER)][index % ROWNUMBER] = false;
+        gridBoolList[Math.floor(index / COLUMNNUMBER)][index % ROWNUMBER] = 0;
         break;
       default:
         window.alert("something messed up in the grid. please try again");

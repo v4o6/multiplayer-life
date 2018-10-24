@@ -10,6 +10,7 @@ public class Player {
 
   private final long id;
   private final String name;
+  private Color color;
   private volatile LifeState state;
 
   public Player(final String name) {
@@ -25,6 +26,14 @@ public class Player {
     return name;
   }
 
+  public Color getColor() {
+    return color;
+  }
+
+  public void setColor(final Color color) {
+    this.color = color;
+  }
+
   public LifeState getState() {
     return state;
   }
@@ -37,12 +46,14 @@ public class Player {
   public static class Status {
     private final long id;
     private final String name;
+    private final Color color;
     private final boolean ready;
 
     private Status(final Player player) {
-      id = player.getId();
-      name = player.getName();
-      ready = player.getState() != null;
+      id = player.id;
+      name = player.name;
+      color = player.color;
+      ready = player.state != null;
     }
 
     static Status of(final Player player) {
@@ -57,6 +68,10 @@ public class Player {
       return name;
     }
 
+    public Color getColor() {
+      return color;
+    }
+
     public boolean isReady() {
       return ready;
     }
@@ -66,22 +81,24 @@ public class Player {
   public static class Result {
     private final long id;
     private final String name;
+    private final Color color;
     private final LifeState finishState;
     private final int count;
 
-    private Result(final long id, final String name, final LifeState finishState) {
-      this.id = id;
-      this.name = name;
+    private Result(final Player player, final LifeState finishState) {
+      this.id = player.id;
+      this.name = player.name;
+      this.color = player.color;
       this.finishState = finishState;
-      this.count = countAlive(finishState);
+      this.count = countAlive(finishState, color);
     }
 
     public static Result of(final Player player, final LifeState finishState) {
-      return new Result(player.getId(), player.getName(), finishState);
-    }
+      return new Result(player, finishState);
 
-    private static int countAlive(final LifeState state) {
-      return UtilsFunctions.countBoolean(state.getData(), true);
+    }
+    private static int countAlive(final LifeState state, final Color color) {
+      return UtilsFunctions.countBoolean(state.getData(), 1 | color.getMask());
     }
 
     public long getId() {
@@ -90,6 +107,10 @@ public class Player {
 
     public String getName() {
       return name;
+    }
+
+    public Color getColor() {
+      return color;
     }
 
     public LifeState getFinishState() {

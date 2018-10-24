@@ -22,25 +22,25 @@ public class GameTest {
     assert game.addPlayer(player3);
     assert game.addPlayer(player4);
 
-    player1.setState(new LifeState(new boolean[][] {
-        {true}
+    player1.setState(new LifeState(new int[][] {
+        {1}
     }));
-    player2.setState(new LifeState(new boolean[][] {
-        {false}
+    player2.setState(new LifeState(new int[][] {
+        {0}
     }));
-    player3.setState(new LifeState(new boolean[][] {
-        {false}
+    player3.setState(new LifeState(new int[][] {
+        {0}
     }));
-    player4.setState(new LifeState(new boolean[][] {
-        {true}
+    player4.setState(new LifeState(new int[][] {
+        {1}
     }));
 
     game.buildState();
 
     assert game.getState().getSize() == player1.getState().getSize() * 2;
-    assert Arrays.deepEquals(game.getState().getData(), new boolean[][]{
-        {true, false},
-        {false, true}
+    assert Arrays.deepEquals(game.getState().getData(), new int[][]{
+        {1, 0},
+        {0, 1}
     });
   }
 
@@ -53,31 +53,31 @@ public class GameTest {
     assert game.addPlayer(player3);
     assert game.addPlayer(player4);
 
-    player1.setState(new LifeState(new boolean[][] {
-        {true, false},
-        {false, true}
+    player1.setState(new LifeState(new int[][] {
+        {1, 0},
+        {0, 1}
     }));
-    player2.setState(new LifeState(new boolean[][] {
-        {false, true},
-        {true, false}
+    player2.setState(new LifeState(new int[][] {
+        {0, 1},
+        {1, 0}
     }));
-    player3.setState(new LifeState(new boolean[][] {
-        {false, false},
-        {true, true}
+    player3.setState(new LifeState(new int[][] {
+        {0, 0},
+        {1, 1}
     }));
-    player4.setState(new LifeState(new boolean[][] {
-        {true, true},
-        {false, false}
+    player4.setState(new LifeState(new int[][] {
+        {1, 1},
+        {0, 0}
     }));
 
     game.buildState();
 
     assert game.getState().getSize() == player1.getState().getSize() * 2;
-    assert Arrays.deepEquals(game.getState().getData(), new boolean[][]{
-        {true, false, false, true},
-        {false, true, true, false},
-        {false, false, true, true},
-        {true, true, false, false}
+    assert Arrays.deepEquals(game.getState().getData(), new int[][]{
+        {1, 0, 0, 1},
+        {0, 1, 1, 0},
+        {0, 0, 1, 1},
+        {1, 1, 0, 0}
     });
   }
 
@@ -90,46 +90,46 @@ public class GameTest {
     assert game.addPlayer(player3);
     assert game.addPlayer(player4);
 
-    final List<Player.Result> playerResults = game.getPlayerResults(new LifeState(new boolean[][] {
-        {true, false, false, true},
-        {false, false, true, false},
-        {false, false, true, true},
-        {true, true, false, true}
+    final List<Player.Result> playerResults = game.getPlayerResults(new LifeState(new int[][] {
+        {1, 0, 0, 1},
+        {0, 0, 1, 0},
+        {0, 0, 1, 1},
+        {1, 1, 0, 1}
     }));
 
     final Player.Result result1 = playerResults.get(0);
     assert player1.getId() == result1.getId();
     assert player1.getName().equals(result1.getName());
-    assert Arrays.deepEquals(result1.getFinishState().getData(), new boolean[][]{
-        {true, false},
-        {false, false}
+    assert Arrays.deepEquals(result1.getFinishState().getData(), new int[][]{
+        {1, 0},
+        {0, 0}
     });
     assert  result1.getCount() == 1;
 
     final Player.Result result2 = playerResults.get(1);
     assert player2.getId() == result2.getId();
     assert player2.getName().equals(result2.getName());
-    assert Arrays.deepEquals(result2.getFinishState().getData(), new boolean[][]{
-        {false, true},
-        {true, false}
+    assert Arrays.deepEquals(result2.getFinishState().getData(), new int[][]{
+        {0, 1},
+        {1, 0}
     });
     assert  result2.getCount() == 2;
 
     final Player.Result result3 = playerResults.get(2);
     assert player3.getId() == result3.getId();
     assert player3.getName().equals(result3.getName());
-    assert Arrays.deepEquals(result3.getFinishState().getData(), new boolean[][]{
-        {false, false},
-        {true, true}
+    assert Arrays.deepEquals(result3.getFinishState().getData(), new int[][]{
+        {0, 0},
+        {1, 1}
     });
     assert  result3.getCount() == 2;
 
     final Player.Result result4 = playerResults.get(3);
     assert player4.getId() == result4.getId();
     assert player4.getName().equals(result4.getName());
-    assert Arrays.deepEquals(result4.getFinishState().getData(), new boolean[][]{
-        {true, true},
-        {false, true}
+    assert Arrays.deepEquals(result4.getFinishState().getData(), new int[][]{
+        {1, 1},
+        {0, 1}
     });
     assert  result4.getCount() == 3;
   }
