@@ -30,10 +30,15 @@
   };
   const TWO = new Two(params).appendTo(CANVAS);
   let gameConfig;
+  let startGeneration = 0;
   $.get('/game/data/', {
     gameId: GAME_ID
   }).done((data, textStatus, jqXHR) => {
-        gameConfig = data.data;
+    gameConfig = data.data;
+
+    //set the initial field.
+    renderGrid(gameConfig);
+    gameLoop();
   });
   // = [
   //         [
@@ -325,24 +330,20 @@
   //     true
   //   ],
   // ];
-  let startGeneration = 0;
-
-  //set the initial field.
-  renderGrid(gameConfig);
-
-  //game loops
-  let intervalId = setInterval(() => {
-    updateGrid(gameConfig);
-    renderGrid(gameConfig);
-    startGeneration++;
-    if (startGeneration >= NUMBER_OF_GENERATIONS) {
-      //perform cleanup; submit results to server.
-      clearInterval(intervalId);
+  function gameLoop() {
+    //game loops
+    let intervalId = setInterval(() => {
+      updateGrid(gameConfig);
       renderGrid(gameConfig);
-      submitResults(gameConfig);
-    }
-  }, TIME_BETWEEN_EACH_TICK);
-
+      startGeneration++;
+      if (startGeneration >= NUMBER_OF_GENERATIONS) {
+        //perform cleanup; submit results to server.
+        clearInterval(intervalId);
+        renderGrid(gameConfig);
+        submitResults(gameConfig);
+      }
+    }, TIME_BETWEEN_EACH_TICK);
+  }
   function submitResults(gameConfig) {
     let httpRequest = $.post("/game/submit", {
       gameId: GAME_ID,
