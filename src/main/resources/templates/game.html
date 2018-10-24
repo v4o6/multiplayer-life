@@ -29,9 +29,6 @@
     height: GRIDHEIGHT
   };
   const TWO = new Two(params).appendTo(CANVAS);
-
-  //TODO populate via calling backend API somehow.
-
   let gameConfig;
   $.get('/game/data/', {
     gameId: GAME_ID
@@ -395,6 +392,7 @@
       case 2:
       case 3:
         return true;
+        break;
       default:
         return false;
       }
