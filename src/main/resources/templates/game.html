@@ -12,8 +12,7 @@
 <div id="counter"></div>
 </body>
 <script th:inline="javascript">
-  const GAME_ID = 1;
-      // [[${game_id}]];
+  const GAME_ID = [[${game_id}]];
   const NUMBER_OF_GENERATIONS = 5000;
   const TIME_BETWEEN_EACH_TICK = 10;
   const GRIDHEIGHT = 800;
