@@ -7,49 +7,10 @@
     <!--<script src="../static/javascript/two.min.js"></script>-->
     <title>game in progress!</title>
 </head>
-
 <body>
-
-<table>
-    <tr>
-        <td>
-            <div id="canvas"></div>
-        </td>
-        <td>
-            <table>
-                <thead>
-                    <td><h4>Player</h4></td>
-                </thead>
-                <tbody>
-                <tr id="player1" th:with="player1=${statuses[0]}">
-                    <td>
-                        <div id="player1-name" th:text="*{name}">o1n</div>
-                    </td>
-                </tr>
-                <tr id="player2" th:with="player2=${statuses[1]}">
-                    <td>
-                        <div id="player2-name" th:text="*{name}">t20</div>
-                    </td>
-                </tr>
-                <tr id="player3" th:with="player3=${statuses[2]}">
-                    <td>
-                        <div id="player3-name" th:text="*{name}">3re</div>
-                    </td>
-                </tr>
-                <tr id="player4" th:with="player4=${statuses[3]}">
-                    <td>
-                        <div id="player4-name" th:text="*{name}">4r0</div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div id="counter"></div>
-        </td>
-    </tr>
-</table>
-
+<div id="canvas"></div>
+<div id="counter"></div>
 </body>
-
 <script th:inline="javascript">
   const GAME_ID = [[${game_id}]];
   const NUMBER_OF_GENERATIONS = 5000;
@@ -431,7 +392,6 @@
       case 2:
       case 3:
         return true;
-        break;
       default:
         return false;
       }
