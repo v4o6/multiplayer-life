@@ -43,6 +43,7 @@
                 </tbody>
             </table>
             <div id="counter"></div>
+            <button onclick="finishGame()">Stop!</button>
         </td>
     </tr>
 </table>
@@ -50,7 +51,7 @@
 </body>
 <script th:inline="javascript">
   const GAME_ID = [[${gameId}]];
-  const NUMBER_OF_GENERATIONS = 200;
+  const NUMBER_OF_GENERATIONS = 2000;
   const TIME_BETWEEN_EACH_TICK = 10;
   const GRIDHEIGHT = 800;
   const GRIDWIDTH = 800;
@@ -70,6 +71,7 @@
   let currentConfig;
   let nextConfig;
   let startGeneration = 0;
+  let intervalId;
   $.get('/game/data', {
     gameId: GAME_ID
   }).done((data, textStatus, jqXHR) => {
@@ -371,22 +373,16 @@
   // ];
   function gameLoop() {
     //game loops
-    let intervalId = setInterval(() => {
+    intervalId = setInterval(() => {
       updateGrid(currentConfig);
       renderGrid(currentConfig);
       startGeneration++;
       if (startGeneration >= NUMBER_OF_GENERATIONS) {
-        //perform cleanup; submit results to server.
-        clearInterval(intervalId);
-        renderGrid(currentConfig);
-        submitResults(currentConfig);
-        //redirect to result page
-        setTimeout(function () {
-          window.location.href = "/result/" + GAME_ID;
-        }, 2000);
+        finishGame();
       }
     }, TIME_BETWEEN_EACH_TICK);
   }
+
   function submitResults(gameConfig) {
     let httpRequest = $.post("/game/submit", {
           gameId: GAME_ID,
@@ -488,6 +484,15 @@
       event.target.attributes.fill.value = ALIVE;
       break;
     }
+  }
+
+  function finishGame() {
+    //perform cleanup; submit results to server.
+    clearInterval(intervalId);
+    renderGrid(currentConfig);
+    submitResults(currentConfig);
+    //redirect to result page
+    window.location.href = "/result/" + GAME_ID;
   }
 
 </script>
