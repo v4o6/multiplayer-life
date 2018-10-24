@@ -67,15 +67,16 @@
     height: GRIDHEIGHT
   };
   const TWO = new Two(params).appendTo(CANVAS);
-  let gameConfig;
+  let currentConfig;
+  let nextConfig;
   let startGeneration = 0;
   $.get('/game/data', {
     gameId: GAME_ID
   }).done((data, textStatus, jqXHR) => {
-    gameConfig = data.data;
+    initGrid(data.data);
 
     //set the initial field.
-    renderGrid(gameConfig);
+    renderGrid(currentConfig);
     gameLoop();
   });
   // = [
@@ -371,14 +372,14 @@
   function gameLoop() {
     //game loops
     let intervalId = setInterval(() => {
-      updateGrid(gameConfig);
-      renderGrid(gameConfig);
+      updateGrid(currentConfig);
+      renderGrid(currentConfig);
       startGeneration++;
       if (startGeneration >= NUMBER_OF_GENERATIONS) {
         //perform cleanup; submit results to server.
         clearInterval(intervalId);
-        renderGrid(gameConfig);
-        submitResults(gameConfig);
+        renderGrid(currentConfig);
+        submitResults(currentConfig);
         //redirect to result page
         setTimeout(function () {
           window.location.href = "/result/" + GAME_ID;
@@ -404,10 +405,18 @@
     }
   }
 
+  function initGrid(data) {
+    currentConfig = data;
+    nextConfig = [];
+    for (let i = 0; i < data.length; i++) {
+      nextConfig[i] = new Array(data[i].length);
+    }
+  }
+
   function updateGrid(booleanGrid) {
-    for (let j = 0; j < ROWNUMBER; j++) {
-      for (let i = 0; i < COLUMNNUMBER; i++) {
-        let neighbhours = [
+    for (let i = 0; i < ROWNUMBER; i++) {
+      for (let j = 0; j < COLUMNNUMBER; j++) {
+        let neighbours = [
           booleanGrid[bitwiseWrap(i - 1)][bitwiseWrap(j - 1)],
           booleanGrid[bitwiseWrap(i - 1)][j],
           booleanGrid[bitwiseWrap(i - 1)][bitwiseWrap(j + 1)],
@@ -419,16 +428,18 @@
         ];
         let liveCount = 0;
         let deadCount = 0;
-        neighbhours.forEach((neighbhour) => {
+        neighbours.forEach((neighbhour) => {
           if (neighbhour) {
             liveCount++;
           }
         });
 
-        booleanGrid[i][j] = isAlive(liveCount, booleanGrid[i][j]);
+        nextConfig[i][j] = isAlive(liveCount, booleanGrid[i][j]);
       }
-
     }
+    // swap grids
+    currentConfig = nextConfig;
+    nextConfig = booleanGrid;
   }
 
   function isAlive(liveCount, currentStatus) {
