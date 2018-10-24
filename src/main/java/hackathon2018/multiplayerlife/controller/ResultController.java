@@ -28,21 +28,20 @@ public class ResultController {
     model.addAttribute("results", result.getResults());
     model.addAttribute("winner", result.getWinner());
     model.addAttribute("gameSize", gameService.getGameSize());
+    model.addAttribute("playerSize", gameService.getPlayerSize());
     return "result";
   }
 
-  @GetMapping("/result/data")
+  @GetMapping("/result/gamedata")
   @ResponseBody
-  public LifeState getPlayerData(@RequestParam("gameId") final long gameId,
-                                 @RequestParam("playerId") final long playerId) {
-    final Result result = gameService.getGameResult(gameId);
-    for (final Player.Result playerResult : result.getResults()) {
-      if (playerResult.getId() == playerId) {
-        return playerResult.getFinishState();
-      }
-    }
-    logger.warn("bad data request: gameId={}, playerId={}", gameId, playerId);
-    return null;
+  public LifeState getGameData(@RequestParam("gameId") final long gameId) {
+    return gameService.getGameResult(gameId).getState();
+  }
+
+  @GetMapping("/result/playerdata")
+  @ResponseBody
+  public LifeState getPlayerData(@RequestParam("playerId") final long playerId) {
+    return gameService.getPlayer(playerId).getState();
   }
 
 }

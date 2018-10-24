@@ -8,29 +8,45 @@
 </head>
 
 <body>
-<h2 th:text="|${winner.name} has won the game of life. COUNT: ${winner.count}|">Hey, the winner is won 20</h2>
 
 <table>
     <tr>
-        <td th:with="result1=${results[0]}">
-            <h4 th:text="${result1.name}">un1</h4>
-            <div th:text="|Count: ${result1.count}|">1</div>
-            <div id="canvas1"></div>
+        <td>
+            <h2>RESULT:</h2>
+            <h2 th:text="|${winner.name} has won the game of life. COUNT: ${winner.count}|">Hey, the winner is won 20</h2>
+            <div id="canvas"></div>
         </td>
-        <td th:with="result2=${results[1]}">
-            <h4 th:text="${result2.name}">t0w</h4>
-            <div th:text="|Count: ${result2.count}|">20</div>
-            <div id="canvas2"></div>
-        </td>
-        <td th:with="result3=${results[2]}">
-            <h4 th:text="${result3.name}">se3</h4>
-            <div th:text="|Count: ${result3.count}|">9</div>
-            <div id="canvas3"></div>
-        </td>
-        <td th:with="result4=${results[3]}">
-            <h4 th:text="${result4.name}">f04</h4>
-            <div th:text="|Count: ${result4.count}|">0</div>
-            <div id="canvas4"></div>
+        <td>
+            <table>
+                <tr>
+                    <td th:with="result1=${results[0]}">
+                        <h4 th:text="${result1.name}">un1</h4>
+                        <div>Starter input:</div>
+                        <div id="canvas1"></div>
+                        <div th:text="|Final count: ${result1.count}|">1</div>
+                    </td>
+                    <td th:with="result2=${results[1]}">
+                        <h4 th:text="${result2.name}">t0w</h4>
+                        <div>Starter input:</div>
+                        <div id="canvas2"></div>
+                        <div th:text="|Final count: ${result2.count}|">20</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:with="result3=${results[2]}">
+                        <h4 th:text="${result3.name}">se3</h4>
+                        <div>Starter input:</div>
+                        <div id="canvas3"></div>
+                        <div th:text="|Final count: ${result3.count}|">9</div>
+                    </td>
+                    <td th:with="result4=${results[3]}">
+                        <h4 th:text="${result4.name}">f04</h4>
+                        <div>Starter input:</div>
+                        <div id="canvas4"></div>
+                        <div th:text="|Final count: ${result4.count}|">0</div>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>
@@ -45,12 +61,18 @@
     [[${results[2].id}]],
     [[${results[3].id}]]
   ];
-  const GRIDHEIGHT = 400;
-  const GRIDWIDTH = 400;
-  const ROWNUMBER = [[${gameSize}]];
-  const COLUMNNUMBER = [[${gameSize}]];
-  const CELLHEIGHT = GRIDHEIGHT / ROWNUMBER;
-  const CELLWIDTH = GRIDWIDTH / ROWNUMBER;
+  const G_GRIDHEIGHT = 800;
+  const G_GRIDWIDTH = 800;
+  const G_ROWNUMBER = [[${gameSize}]];
+  const G_COLUMNNUMBER = [[${gameSize}]];
+  const G_CELLHEIGHT = G_GRIDHEIGHT / G_ROWNUMBER;
+  const G_CELLWIDTH = G_GRIDWIDTH / G_ROWNUMBER;
+  const P_GRIDHEIGHT = 320;
+  const P_GRIDWIDTH = 320;
+  const P_ROWNUMBER = [[${playerSize}]];
+  const P_COLUMNNUMBER = [[${playerSize}]];
+  const P_CELLHEIGHT = P_GRIDHEIGHT / P_ROWNUMBER;
+  const P_CELLWIDTH = P_GRIDWIDTH / P_ROWNUMBER;
   const ALIVE = [
     [[${results[0].color.code}]],
     [[${results[1].color.code}]],
@@ -58,9 +80,19 @@
     [[${results[3].color.code}]]
   ];
   const DEAD = "#FFFFFF";
+
+  // populate game grid
+  const TWO = new Two({width: G_GRIDWIDTH, height: G_GRIDHEIGHT}).appendTo(document.getElementById("canvas"));
+  $.get('/result/gamedata', {
+    gameId: GAME_ID
+  }).done((data, textStatus, jqXHR) => {
+    renderGrid(data.data, TWO, false);
+  });
+
+  // populate player grids
   const params = {
-    width: GRIDWIDTH,
-    height: GRIDHEIGHT
+    width: P_GRIDWIDTH,
+    height: P_GRIDHEIGHT
   };
   const TWOS = [
     new Two(params).appendTo(document.getElementById("canvas1")),
@@ -72,27 +104,29 @@
     let callback = function () {
       let closure_i = i;
       return function (data, textStatus, jqXHR) {
-        renderGrid(data.data, TWOS[closure_i]);
+        renderGrid(data.data, TWOS[closure_i], true);
       };
     }();
-    $.get('/result/data', {
-      gameId: GAME_ID,
+    $.get('/result/playerdata', {
       playerId: PLAYER_IDS[i]
     }).done(callback);
   }
 
-  function renderGrid(booleanGrid, TWO) {
-    TWO.clear();
-    for (let j = 0; j < ROWNUMBER; j++) {
-      for (let i = 0; i < COLUMNNUMBER; i++) {
-        let rect = TWO.makeRectangle(CELLHEIGHT * i + CELLHEIGHT / 2, CELLWIDTH * j + CELLWIDTH / 2, CELLHEIGHT,
-            CELLWIDTH);
+  function renderGrid(booleanGrid, two, player) {
+    let rowNumber = player ? P_ROWNUMBER : G_ROWNUMBER;
+    let columnNumber = player ? P_COLUMNNUMBER : G_COLUMNNUMBER;
+    let cellHeight = player ? P_CELLHEIGHT : G_CELLHEIGHT;
+    let cellWidth = player ? P_CELLWIDTH : G_CELLWIDTH;
+    two.clear();
+    for (let j = 0; j < rowNumber; j++) {
+      for (let i = 0; i < columnNumber; i++) {
+        let rect = two.makeRectangle(cellHeight * i + cellWidth / 2, cellWidth * j + cellWidth / 2, cellHeight, cellWidth);
         rect.fill = getCellColor(booleanGrid[j][i]);
         rect.stroke = '#000000';
         rect.lineWidth = '5px';
       }
     }
-    TWO.update();
+    two.update();
   }
 
   function getCellColor(cell) {
